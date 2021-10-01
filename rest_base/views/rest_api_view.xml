@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_rest_api_tree" model="ir.ui.view">
+        <field name="name">rest.api.tree</field>
+        <field name="model">rest.api</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <tree string="APIs">
+                <field name="name"/>
+                <field name="url"/>
+                <field name="log_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_rest_api_form" model="ir.ui.view">
+        <field name="name">rest.api.form</field>
+        <field name="model">rest.api</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <form string="API">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_rest_log" type="object" class="oe_stat_button" icon="fa-list">
+                            <field string="Logs" name="log_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <div class="oe_title oe_left">
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="url"/>
+                            <field name="log_success"/>
+                        </group>
+                        <group>
+                            <field name="ssl_protocol"/>
+                            <field name="ssl_certfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
+                            <field name="ssl_keyfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rest_api" model="ir.actions.act_window">
+        <field name="name">APIs</field>
+        <field name="res_model">rest.api</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_rest_api_tree"/>
+    </record>
+
+    <record id="action_view_rest_api_tree" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_rest_api"/>
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_rest_api_tree"/>
+    </record>
+
+    <record id="action_view_rest_api_form" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_rest_api"/>
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_rest_api_form"/>
+    </record>
+
+    <menuitem action="action_rest_api" name="APIs" id="menu_rest_api" parent="menu_rest" sequence="10" groups="base.group_system"/>
+</odoo>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="REST" id="menu_rest" parent="base.menu_administration_shortcut" sequence="100" groups="base.group_system"/>
+</odoo>
