@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="api_sks_kontorsdatabasen" model="rest.api">
+            <field name="name">Kontorsdatabasen</field>
+            <field name="url">????</field>
+            <field name="ssl_protocol">no_verify</field>
+            <field name="log_success">False</field>
+        </record>
+    </data>
+</odoo>

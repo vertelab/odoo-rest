@@ -30,7 +30,9 @@ class RestApi(models.Model):
     )
     ssl_certfile = fields.Char(string="Certfile", help="Path to the certfile")
     ssl_keyfile = fields.Char(string="Keyfile", help="Path to the keyfile")
-    log_success = fields.Boolean(string="Log successes", help="If off, the code will only log errors")
+    log_success = fields.Boolean(
+        string="Log successes", help="If off, the code will only log errors"
+    )
     log_count = fields.Integer(compute="_log_count", string="no. logs")
 
     def _log_count(self):
@@ -129,3 +131,18 @@ class RestApi(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id("rest_base.action_rest_log")
         action["domain"] = [("rest_api_id", "=", self.id)]
         return action
+
+    def create_external_id(self, res_model, res_id, name):
+        """Function to help create external ids"""
+        self.ensure_one()
+        if res_model and res_id and name:
+            vals = {
+                "module": "__import__",
+                "model": res_model,
+                "res_id": res_id,
+                "name": name,
+            }
+            res = self.env["ir.model.data"].create(vals)
+        else:
+            res = False
+        return res
