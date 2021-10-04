@@ -41,6 +41,8 @@
                             <field name="log_success"/>
                         </group>
                         <group>
+                            <field name="user"/>
+                            <field name="password"/>
                             <field name="ssl_protocol"/>
                             <field name="ssl_certfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
                             <field name="ssl_keyfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
