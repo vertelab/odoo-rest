@@ -32,6 +32,7 @@ Implements REST calls to the Kontorsdatabas API at Skogsstyrelsen.
     ],
     "data": [
         "data/rest_api_data.xml",
+        "data/ir_actions_server.xml",
     ],
     "demo": [],
     "installable": True,
