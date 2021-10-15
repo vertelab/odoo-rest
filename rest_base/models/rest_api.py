@@ -20,7 +20,9 @@ class RestApi(models.Model):
 
     name = fields.Char(string="Name")
     user = fields.Char(string="User", help="A username for authentication, if needed.")
-    password = fields.Char(string="Password", help="A password for authentication, if needed.")
+    password = fields.Char(
+        string="Password", help="A password for authentication, if needed."
+    )
     url = fields.Char(string="URL", help="Base URL to the API")
     ssl_protocol = fields.Selection(
         string="SSL Protocol",
