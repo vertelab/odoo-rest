@@ -72,9 +72,7 @@ class RestApi(models.Model):
 
         if self.use_basic_auth:
             # Use HTTP Basic access authentication
-            b64_auth = base64.b64encode(
-                bytes(f"{self.user}:{self.password}", "utf-8")
-            )
+            b64_auth = base64.b64encode(bytes(f"{self.user}:{self.password}", "utf-8"))
             headers["Authorization"] = f"Basic {b64_auth.decode()}"
 
         data_vals = json.dumps(data_vals).encode("utf-8") if data_vals else None
@@ -91,7 +89,7 @@ class RestApi(models.Model):
             log_vals = {
                 "endpoint_url": endpoint_url,
                 "headers": headers,
-                "method":method,
+                "method": method,
                 "data": data_vals,
                 "message": formatted_error,
                 "state": "error",
@@ -105,7 +103,7 @@ class RestApi(models.Model):
             log_vals = {
                 "endpoint_url": endpoint_url,
                 "headers": headers,
-                "method":method,
+                "method": method,
                 "data": data_vals,
                 "message": formatted_error,
                 "state": "error",
@@ -115,11 +113,13 @@ class RestApi(models.Model):
             log_vals["response"] = f"{e.reason}"
             return log_vals
         except ConnectionResetError as e:
-            formatted_error = f"URL error while sending message: {e.errno}: {e.strerror}"
+            formatted_error = (
+                f"URL error while sending message: {e.errno}: {e.strerror}"
+            )
             log_vals = {
                 "endpoint_url": endpoint_url,
                 "headers": headers,
-                "method":method,
+                "method": method,
                 "data": data_vals,
                 "message": formatted_error,
                 "state": "error",
