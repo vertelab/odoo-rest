@@ -144,7 +144,7 @@ class RestApi(models.Model):
     def test_connection(self):
         """Tests the connection to the API.
         Should be implemented by each implementation of this module"""
-        raise UserError("This API has no test defined.")
+        raise UserError(_("This API has no test defined."))
 
     def create_log(self, endpoint_url, headers, method, data, message, state):
         self.ensure_one()
