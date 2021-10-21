@@ -87,40 +87,43 @@ class RestApi(models.Model):
             formatted_error = (
                 f"HTTP error while sending message: {e.code} {e.reason}: {e.read()}"
             )
-            log_id = self.create_log(
-                endpoint_url=endpoint_url,
-                headers=headers,
-                method=method,
-                data=data_vals,
-                message=formatted_error,
-                state="error",
-            )
+            log_vals = {
+                "endpoint_url": endpoint_url,
+                "headers": headers,
+                "method":method,
+                "data": data_vals,
+                "message": formatted_error,
+                "state": "error",
+            }
+            log_id = self.create_log(**log_vals)
             _logger.exception(f"log created: {log_id.id}: " + formatted_error)
-            return {"error": formatted_error}
+            return log_vals
         except URLError as e:
             formatted_error = f"URL error while sending message: {e.reason}"
-            log_id = self.create_log(
-                endpoint_url=endpoint_url,
-                headers=headers,
-                method=method,
-                data=data_vals,
-                message=formatted_error,
-                state="error",
-            )
+            log_vals = {
+                "endpoint_url": endpoint_url,
+                "headers": headers,
+                "method":method,
+                "data": data_vals,
+                "message": formatted_error,
+                "state": "error",
+            }
+            log_id = self.create_log(**log_vals)
             _logger.exception(f"log created: {log_id.id}: " + formatted_error)
-            return {"error": formatted_error}
+            return log_vals
         except ConnectionResetError as e:
             formatted_error = f"URL error while sending message: {e.errno}: {e.strerror}"
-            log_id = self.create_log(
-                endpoint_url=endpoint_url,
-                headers=headers,
-                method=method,
-                data=data_vals,
-                message=formatted_error,
-                state="error",
-            )
+            log_vals = {
+                "endpoint_url": endpoint_url,
+                "headers": headers,
+                "method":method,
+                "data": data_vals,
+                "message": formatted_error,
+                "state": "error",
+            }
+            log_id = self.create_log(**log_vals)
             _logger.exception(f"log created: {log_id.id}: " + formatted_error)
-            return {"error": formatted_error}
+            return log_vals
         except Exception as e:
             raise e
 
