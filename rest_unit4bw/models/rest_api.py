@@ -31,7 +31,7 @@ class RestApiAgresso(models.Model):
 
     def put_project(self):
         # select = [
-        #     {
+        #     {h
         #         "locationCode": "00656",
         #         "modelCode": "B345",
         #         "registrationNumber": "18LXSC",
