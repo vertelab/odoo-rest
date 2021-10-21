@@ -93,7 +93,7 @@ class RestApi(models.Model):
                 "headers": headers,
                 "method":method,
                 "data": data_vals,
-                "message": "formatted_error",
+                "message": formatted_error,
                 "state": "error",
             }
             log_id = self.create_log(**log_vals)

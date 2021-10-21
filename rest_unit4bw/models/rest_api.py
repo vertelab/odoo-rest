@@ -24,11 +24,11 @@ class RestApiAgresso(models.Model):
     # def get_projects(self):
     #     res = self.call_endpoint(method="GET", endpoint_url="/v1/objects/projects")
 
-    def get_project(self, project):
+    def agr_get_project(self, project):
         project_nr = "UV-2021-1"
         res = self.call_endpoint(method="GET", endpoint_url=f"/v1/projects/{project_nr}")
 
-    def put_project(self):
+    def agr_put_project(self):
         # select = [
         #     {h
         #         "locationCode": "00656",
