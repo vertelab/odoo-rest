@@ -18,7 +18,7 @@ class RestApiAgresso(models.Model):
 
     def test_connection(self):
         if self == self.env.ref("rest_signport.api_signport"):
-            res = self.call_endpoint(method="get", endpoint_url="/__Health", headers={"accept": "application/json"})
+            res = self.call_endpoint(method="GET", endpoint_url="/__Health", headers={"accept": "application/json"})
             _logger.warning("response"*99)
             _logger.warning(res)
             if res.get('code') == "200":
