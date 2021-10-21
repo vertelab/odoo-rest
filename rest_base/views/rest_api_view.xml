@@ -39,10 +39,11 @@
                             <field name="id" invisible="1"/>
                             <field name="url"/>
                             <field name="log_success"/>
+                            <field name="use_basic_auth"/>
                         </group>
                         <group>
-                            <field name="user"/>
-                            <field name="password"/>
+                            <field name="user" attrs="{'required': [('use_basic_auth', '=', True)]}"/>
+                            <field name="password" attrs="{'required': [('use_basic_auth', '=', True)]}"/>
                             <field name="ssl_protocol"/>
                             <field name="ssl_certfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
                             <field name="ssl_keyfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>

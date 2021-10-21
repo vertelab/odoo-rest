@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from odoo import _, api, fields, models
-from urllib import request
-from urllib.error import HTTPError, URLError
 import json
 import ssl
+import base64
+from urllib import request
+from urllib.error import HTTPError, URLError
+from odoo import _, api, fields, models
+
 
 _logger = logging.getLogger(__name__)
 
@@ -38,6 +40,7 @@ class RestApi(models.Model):
         string="Log successes", help="If off, the code will only log errors"
     )
     log_count = fields.Integer(compute="_log_count", string="no. logs")
+    use_basic_auth = fields.Boolean(string="Use Basic Authentication")
 
     def _log_count(self):
         for rec in self:
@@ -65,6 +68,14 @@ class RestApi(models.Model):
     def call_endpoint(self, method, endpoint_url, headers={}, data_vals=None):
         """Handles calls to endpoints."""
         self.ensure_one()
+
+        if self.use_basic_auth:
+            # Use HTTP Basic access authentication
+            b64_auth = base64.b64encode(
+                bytes(f"{self.user}:{self.password}", "utf-8")
+            )
+            headers["Authorization"] = f"Basic {b64_auth.decode()}"
+
         data_vals = json.dumps(data_vals).encode("utf-8") if data_vals else None
         ctx = self._generate_ctx()
         url = self.url + endpoint_url
@@ -87,6 +98,18 @@ class RestApi(models.Model):
             return {"error": formatted_error}
         except URLError as e:
             formatted_error = f"URL error while sending message: {e.reason}"
+            log_id = self.create_log(
+                endpoint_url=endpoint_url,
+                headers=headers,
+                method=method,
+                data=data_vals,
+                message=formatted_error,
+                state="error",
+            )
+            _logger.exception(f"log created: {log_id.id}: " + formatted_error)
+            return {"error": formatted_error}
+        except ConnectionResetError as e:
+            formatted_error = f"URL error while sending message: {e.errno}: {e.strerror}"
             log_id = self.create_log(
                 endpoint_url=endpoint_url,
                 headers=headers,

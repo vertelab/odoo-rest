@@ -23,10 +23,11 @@
     "name": "Rest base",
     "description": """
 Implements a standardized way to call REST APIs from Odoo and logs errors.
-14.0.0.0.0 - Initial version
+14.0.1.1.0 - Added better errorhandling and support for HTTP Basic Authentication
+14.0.1.0.0 - Initial version
     """,
     "category": "REST",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "depends": [
         "base",
     ],
