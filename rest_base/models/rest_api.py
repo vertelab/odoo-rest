@@ -101,7 +101,7 @@ class RestApi(models.Model):
             }
             log_id = self.create_log(**log_vals)
             _logger.exception(f"log created: {log_id.id}: " + formatted_error)
-            log_vals["response"] = "{e.code} {e.reason}: {e_read}"
+            log_vals["response"] = f"{e.code} {e.reason}: {e_read}"
             return log_vals
         except URLError as e:
             formatted_error = f"URL error while sending message: {e.reason}"
