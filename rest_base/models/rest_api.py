@@ -165,12 +165,12 @@ class RestApi(models.Model):
         action["domain"] = [("rest_api_id", "=", self.id)]
         return action
 
-    def create_external_id(self, res_model, res_id, name):
+    def _create_external_id(self, module, res_model, res_id, name):
         """Function to help create external ids"""
         self.ensure_one()
         if res_model and res_id and name:
             vals = {
-                "module": "__import__",
+                "module": module,
                 "model": res_model,
                 "res_id": res_id,
                 "name": name,

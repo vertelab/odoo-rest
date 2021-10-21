@@ -23,7 +23,7 @@
     "name": "Rest Unit4 Business World (Agresso)",
     "description": """
 Implements REST calls to the Unit4 Business World (Agresso Cloud ERP Solution) API.
-14.0.0.0.0 - Initial version
+14.0.1.0.0 - Initial version
     """,
     "category": "REST",
     "version": "14.0.1.0.0",
