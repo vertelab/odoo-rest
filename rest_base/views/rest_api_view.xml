@@ -49,6 +49,9 @@
                             <field name="ssl_keyfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
                         </group>
                     </group>
+                    <group>
+                        <button string="Test connection" name="test_connection" type="object" class="btn btn-primary"/>
+                    </group>
                 </sheet>
             </form>
         </field>

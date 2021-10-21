@@ -7,6 +7,7 @@ import base64
 from urllib import request
 from urllib.error import HTTPError, URLError
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 _logger = logging.getLogger(__name__)
@@ -139,6 +140,11 @@ class RestApi(models.Model):
             )
 
         return res
+
+    def test_connection(self):
+        """Tests the connection to the API.
+        Should be implemented by each implementation of this module"""
+        raise UserError("This API has no test defined.")
 
     def create_log(self, endpoint_url, headers, method, data, message, state):
         self.ensure_one()
