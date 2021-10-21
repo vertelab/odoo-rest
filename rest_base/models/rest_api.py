@@ -84,19 +84,21 @@ class RestApi(models.Model):
         try:
             res_json = request.urlopen(req, context=ctx).read()
         except HTTPError as e:
+            e_read = e.read()
             formatted_error = (
-                f"HTTP error while sending message: {e.code} {e.reason}: {e.read()}"
+                f"HTTP error while sending message: {e.code} {e.reason}: {e_read}"
             )
             log_vals = {
                 "endpoint_url": endpoint_url,
                 "headers": headers,
                 "method":method,
                 "data": data_vals,
-                "message": formatted_error,
+                "message": "formatted_error",
                 "state": "error",
             }
             log_id = self.create_log(**log_vals)
             _logger.exception(f"log created: {log_id.id}: " + formatted_error)
+            log_vals["response"] = "{e.code} {e.reason}: {e_read}"
             return log_vals
         except URLError as e:
             formatted_error = f"URL error while sending message: {e.reason}"
@@ -110,6 +112,7 @@ class RestApi(models.Model):
             }
             log_id = self.create_log(**log_vals)
             _logger.exception(f"log created: {log_id.id}: " + formatted_error)
+            log_vals["response"] = f"{e.reason}"
             return log_vals
         except ConnectionResetError as e:
             formatted_error = f"URL error while sending message: {e.errno}: {e.strerror}"
@@ -123,6 +126,7 @@ class RestApi(models.Model):
             }
             log_id = self.create_log(**log_vals)
             _logger.exception(f"log created: {log_id.id}: " + formatted_error)
+            log_vals["response"] = f"{e.errno}: {e.strerror}"
             return log_vals
         except Exception as e:
             raise e
