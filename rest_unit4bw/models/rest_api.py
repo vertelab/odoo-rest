@@ -24,6 +24,6 @@ class RestApiAgresso(models.Model):
             return super(RestApiAgresso, self).test_connection()
 
     def agr_post_project(self, data_vals):
-        res = self.call_endpoint(
+        return self.call_endpoint(
             method="POST", endpoint_url="/v1/projects", data_vals=data_vals
         )
