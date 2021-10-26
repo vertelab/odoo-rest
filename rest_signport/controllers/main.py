@@ -6,21 +6,26 @@ _logger = logging.getLogger(__name__)
 
 class KnowitController(http.Controller):
 
-    @http.route(['/knowit/form'], type='json', auth="user", methods=['POST'])
-    def knowit_form_view(self, **html_code):
-        return request.env['product.template'].browse(int(product_template_id)).create_product_variant(product_template_attribute_value_ids)
+    def get_signport_api(self):
+        return request.env.ref("rest_signport.api_signport")
+
+    @http.route(['/signport/signing/complete'], type='json', auth="public", methods=['POST'])
+    def complete_signing(self, **html_code):
+        _logger.error(html_code)
+        data = json.loads(request.httprequest.data)
+        _logger.error(data)
 
 
     @http.route(['/my/orders/<int:order_id>/start_sign'], type='json', auth="public", website=True, methods=['POST'])
     def start_sign(self, order_id):
-        _logger.warning("START SIGN!!!"*99)
+        _logger.warning(order_id)
         data = json.loads(request.httprequest.data)
-        #data = {
-        #    "ssn": "XXXXXXX-XXXX",
-        #}
-        #order_id
-        res = {
-            "html_code": "<div> boooo </div>"
-        }
+        _logger.warning(**data)
+        ssn = data.get("ssn")
+        if not ssn:
+            return False
+        api_signport = self.get_signport_api()
+        res = api_signport.post_sign_request(ssn)
+        _logger.warning(res)
         res_json = json.dumps(res)
         return res_json
