@@ -2,7 +2,7 @@
 <odoo>
 
   <template id="sale_order_portal_template_signport" name="Sales Order Portal Template (Signport)" inherit_id="sale.sale_order_portal_template">
-    <!-- <xpath expr="//div[@t-if='sale_order.has_to_be_signed(True)']" position="replace">
+    <xpath expr="//div[@t-if='sale_order.has_to_be_signed(True)']" position="replace">
       <div class="modal-dialog" t-if="sale_order.has_to_be_signed(True)">
           <form id="accept" method="POST" t-att-data-order-id="sale_order.id" t-att-data-token="sale_order.access_token" class="js_accept_json modal-content">
               <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -23,10 +23,12 @@
                   <input id="personnumber" name="Personnummer"/>
                   <button type="button" id="start_signing_bankid" custom="click_cost">Submit</button>
                   <button type="button">Dummy</button>
+                  <div id="bankid_form"> 
+                  </div>
               </main>
           </form>
       </div>
-    </xpath> -->
+    </xpath>
       <!-- portal_sidebar -->
       <xpath expr="//t[@t-set='title']" position="inside">
         <button type="button" class="start_signing_bankid2" href="#">Submit</button>
