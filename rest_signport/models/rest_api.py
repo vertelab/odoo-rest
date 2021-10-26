@@ -45,7 +45,7 @@ class RestApiSignport(models.Model):
         # TODO: attach pdf or xml of order to the request
 
         # document_content = "PHhtbD50ZXN0PC94bWw+"
-        document_content = document.datas
+        document_content = base64.b64encode(document.datas).decode()
 
         headers = {
             "accept": "application/json",
