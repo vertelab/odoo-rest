@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="blah" name="blah" inherit_id="sale.sale_order_portal_template">
+    <xpath expr="//div[@t-if='sale_order.has_to_be_signed(True)']" position="replace">
+      <div class="modal-dialog" t-if="sale_order.has_to_be_signed(True)">
+          <form id="accept" method="POST" t-att-data-order-id="sale_order.id" t-att-data-token="sale_order.access_token" class="js_accept_json modal-content">
+              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+              <header class="modal-header">
+                  <h4 class="modal-title">Validate Order</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+              </header>
+              <main class="modal-body" id="sign-dialog">
+                  <p>
+                      <span>By signing this proposal, I agree to the following terms:</span>
+                      <ul>
+                          <li><span>Accepted on the behalf of:</span> <b t-field="sale_order.partner_id.commercial_partner_id"/></li>
+                          <li><span>For an amount of:</span> <b data-id="total_amount" t-field="sale_order.amount_total"/></li>
+                          <li t-if="sale_order.payment_term_id"><span>With payment terms:</span> <b t-field="sale_order.payment_term_id.note"/></li>
+                      </ul>
+                  </p>
+                  Personnummer:
+                  <input id="personnumber" name="Personnummer"/>
+                  <button type="button" id="start_signing_bankid" custom="click_cost">Submit</button>
+                  <button type="button">Dummy</button>
+              </main>
+          </form>
+      </div>
+    </xpath>
+      <!-- portal_sidebar -->
+  </template>
+  <template id="blah2" name="blah2" inherit_id="sale.sale_order_portal_template">
+      <xpath expr="//t[@t-set='title']" position="inside">
+        <button type="button" class="start_signing_bankid2" id="start_signing_bankid2" href="#">Submit</button>
+        <button type="button">Dummy</button>
+      </xpath>
+      <!-- portal_sidebar -->
+  </template>
+  <template id="assets_fronted" name="assets_fronted: signing bankid" inherit_id="website.assets_frontend">
+       <xpath expr="//script[last()]" position="after">
+          <script src="/rest_signport/static/src/js/main.js" type="text/javascript"/>
+       </xpath>
+  </template>
+</odoo>

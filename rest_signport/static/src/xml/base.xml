@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <templates id="template" xml:space="preserve">
+<t t-inherit="sale.sale_order_portal_template" t-inherit-mode="extension" owl="1">
+  <xpath expr="//div[@class='row mt16 o_portal_sale_sidebar']" position="replace">
+  </xpath>
+  <xpath expr="//div[@id='sale_order.has_to_be_signed(True)']" position="replace">
+    SKEFSLKENFSLEFLKSEJ
+  </xpath>
+  <xpath expr="//div[@t-if='not sale_order.has_to_be_signed(True) and sale_order.has_to_be_paid(True)']" position="replace">
+    SKEFSLKENFSLEFLKSEJ
+  </xpath>
+</t>
+</templates> -->
+
+
+<t t-name="rest_signport.sale_order_portal_template_bankid" t-inherit="sale.sale_order_portal_template" t-inherit-mode="extension" owl="1">
+  <xpath expr="//div[@class='row mt16 o_portal_sale_sidebar']" position="replace">
+  </xpath>
+  <xpath expr="//div[@id='sale_order.has_to_be_signed(True)']" position="replace">
+    SKEFSLKENFSLEFLKSEJ
+  </xpath>
+  <xpath expr="//div[@t-if='not sale_order.has_to_be_signed(True) and sale_order.has_to_be_paid(True)']" position="replace">
+    SKEFSLKENFSLEFLKSEJ
+  </xpath>
+</t>
+
+
+<t t-name='AlternativePickingEditorWidget'>
+        <div class="container" id="abc_header">
+          <button type="button" class="start_signing_bankid2" id="start_signing_bankid2" href="#">Submit</button>
+        </div>
+    </t>
+</t>
+
+<!-- <templates id="template" xml:space="preserve">
+     <t t-extend="sale.sale_order_portal_template">
+         <t t-jquery="div[t-if|='sale_order.has_to_be_signed(True)']" t-operation="replace">
+             ejriawhjofhetgihlwjdloaihwfkgfkwaldfjalwifrhg
+         </t>
+         <t t-jquery=".o_portal_sale_sidebar']" t-operation="replace">
+             ejriawhjofhetgihlwjdloaihwfkgfkwaldfjalwifrhg
+         </t>
+     </t>
+</templates> -->

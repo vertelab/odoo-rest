@@ -29,10 +29,16 @@ Implements REST calls to the SignPort API.
     "version": "14.0.1.0.0",
     "depends": [
         "rest_base",
+        "sale",
+        "portal"
     ],
     "data": [
         "data/rest_api_data.xml",
+        'views/sale_order_portal_templates.xml',
     ],
+    # 'qweb': [
+    #     'static/src/xml/base.xml'
+    # ],
     "demo": [],
     "installable": True,
     "application": False,
