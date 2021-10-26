@@ -20,8 +20,8 @@ class KnowitController(http.Controller):
     def start_sign(self, order_id):
         _logger.warning(order_id)
         data = json.loads(request.httprequest.data)
-        _logger.warning(**data)
-        ssn = data.get("ssn")
+        _logger.warning(data)
+        ssn = data.get("params", {}).get("ssn")
         if not ssn:
             return False
         api_signport = self.get_signport_api()
