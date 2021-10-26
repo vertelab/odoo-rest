@@ -80,10 +80,7 @@ class RestApi(models.Model):
             headers["Content-Type"] = "application/json"
         ctx = self._generate_ctx()
         url = self.url + endpoint_url
-        _logger.warning(f"83 data_vals: {data_vals}")
-        _logger.warning(f"84 headers: {headers}")
         req = request.Request(url=url, data=data_vals, headers=headers, method=method)
-        _logger.warning(f"85 rec: {req}")
         try:
             res_json = request.urlopen(req, context=ctx).read()
         except HTTPError as e:
