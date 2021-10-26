@@ -25,7 +25,7 @@ class KnowitController(http.Controller):
         if not ssn:
             return False
         api_signport = self.get_signport_api()
-        res = api_signport.post_sign_request(ssn)
+        res = api_signport.post_sign_sale_order(ssn=ssn, order_id=order_id, message="Test message.")
         _logger.warning(res)
         res_json = json.dumps(res)
         return res_json
