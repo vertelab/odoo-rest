@@ -76,6 +76,8 @@ class RestApi(models.Model):
             headers["Authorization"] = f"Basic {b64_auth.decode()}"
 
         data_vals = json.dumps(data_vals).encode("utf-8") if data_vals else None
+        if data_vals:
+            headers["Content-Type"] = "application/json"
         ctx = self._generate_ctx()
         url = self.url + endpoint_url
         _logger.warning(f"83 data_vals: {data_vals}")
