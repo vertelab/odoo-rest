@@ -31,7 +31,7 @@ class RestApiKnowit(models.Model):
     def sign_with_bankid(self):
         res = self.call_endpoint(method="POST", endpoint_url="/GetSignRequest", headers={"accept": "application/json", "Content-Type": "application/json; charset=utf8"}, data_vals={
             "username": "Skogsstyrelsen",
-            "password": "jxvEWs6e6zEDJ5dZfpdoSGVAuAtm3S",
+            "password": "",
             "spEntityId": "https://serviceprovider.com/",
             "idpEntityId": "https://eid.test.legitimeringstjanst.se/sc/bankid-mock/",
             "signResponseUrl": "https://serviceprovider.com/handle-dss-response/",
@@ -65,7 +65,7 @@ class RestApiKnowit(models.Model):
         _logger.warning(html_form)
         res2 = self.call_endpoint(method="POST", endpoint_url="/CompleteSigning", headers={"accept": "application/json", "Content-Type": "application/json; charset=utf8"}, data_vals={
             "username": "Skogsstyrelsen",
-            "password": "jxvEWs6e6zEDJ5dZfpdoSGVAuAtm3S",
+            "password": "",
             "relayState": res.get('relayState'),
             "eidSignResponse": res.get('eidSignRequest'),
             "binding": res.get('binding')
