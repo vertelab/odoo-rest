@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-  <template id="blah" name="blah" inherit_id="sale.sale_order_portal_template">
-    <xpath expr="//div[@t-if='sale_order.has_to_be_signed(True)']" position="replace">
+  <template id="sale_order_portal_template_signport" name="Sales Order Portal Template (Signport)" inherit_id="sale.sale_order_portal_template">
+    <!-- <xpath expr="//div[@t-if='sale_order.has_to_be_signed(True)']" position="replace">
       <div class="modal-dialog" t-if="sale_order.has_to_be_signed(True)">
           <form id="accept" method="POST" t-att-data-order-id="sale_order.id" t-att-data-token="sale_order.access_token" class="js_accept_json modal-content">
               <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -26,17 +26,15 @@
               </main>
           </form>
       </div>
-    </xpath>
+    </xpath> -->
       <!-- portal_sidebar -->
-  </template>
-  <template id="blah2" name="blah2" inherit_id="sale.sale_order_portal_template">
       <xpath expr="//t[@t-set='title']" position="inside">
-        <button type="button" class="start_signing_bankid2" id="start_signing_bankid2" href="#">Submit</button>
+        <button type="button" class="start_signing_bankid2" href="#">Submit</button>
         <button type="button">Dummy</button>
       </xpath>
       <!-- portal_sidebar -->
   </template>
-  <template id="assets_fronted" name="assets_fronted: signing bankid" inherit_id="website.assets_frontend">
+  <template id="assets_frontend" name="assets_frontend: signing bankid" inherit_id="web.assets_frontend">
        <xpath expr="//script[last()]" position="after">
           <script src="/rest_signport/static/src/js/main.js" type="text/javascript"/>
        </xpath>

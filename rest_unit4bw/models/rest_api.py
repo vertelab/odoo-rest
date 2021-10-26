@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from datetime import datetime, timedelta
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -15,7 +14,6 @@ class RestApiAgresso(models.Model):
     def test_connection(self):
         if self == self.env.ref("rest_unit4bw.api_unit4bw"):
             res = self.call_endpoint(method="GET", endpoint_url="/v1/status")
-            _logger.warning(res)
             if "1030" in res.get("response", {}):
                 raise UserError(_("Connection is working"))
             else:
