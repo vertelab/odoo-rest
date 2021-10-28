@@ -9,6 +9,11 @@ odoo.define('rest_signport.signport', function (require) {
         events: {
             'click button#start_signing_bankid': '_onClick',
         },
+        renderElement: function(){
+            var self = this;
+            this._super();
+            // _.each(this.getChildren(), function(child){child.renderElement()});
+        },
 
         /**
          * Calls the route to get updated values of the line and order
@@ -21,7 +26,7 @@ odoo.define('rest_signport.signport', function (require) {
          */
         _callBankidSigninRoute(order_id, params) {
             return this._rpc({
-                route: "/my/orders/" + order_id + "/start_sign",
+                route: "/my/orders/" + order_id + "/sign_start",
                 params: params,
             });
         },
@@ -44,13 +49,21 @@ odoo.define('rest_signport.signport', function (require) {
 
             var ssn = $('#personnumber').val();
             console.log(ssn);
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
 
             this._callBankidSigninRoute(self.orderDetail.orderId, {
                 'ssn': ssn,
                 'sale_order': self.orderDetail.orderId,
+                'access_token': urlParams.get('access_token')
             }).then((data) => {
-              console.log(data);
-              $('bankid_form').html(data['html']);
+              data = JSON.parse(data)
+              $('#relayState').val(data['relayState']);
+              $('#eidSignRequest').val(data['eidSignRequest']);
+              $('#binding').val(data['binding']);
+              $('#autosubmit').attr('action', data['signingServiceUrl']);
+              $('#autosubmit').submit();
+              // this.renderElement();
             });
 
         }

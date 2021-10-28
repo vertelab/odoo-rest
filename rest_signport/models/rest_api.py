@@ -31,7 +31,7 @@ class RestApiSignport(models.Model):
         else:
             return super(RestApiSignport, self).test_connection()
 
-    def post_sign_sale_order(self, ssn, order_id, message=False):
+    def post_sign_sale_order(self, ssn, order_id, access_token, message=False):
         document = self.env["ir.attachment"].search(
             [
                 ("res_model", "=", "sale.order"),
@@ -58,8 +58,8 @@ class RestApiSignport(models.Model):
             "username": f"{self.user}",
             "password": f"{self.password}",
             "spEntityId": "https://serviceprovider.com/",
-            "idpEntityId": "https://eid.test.legitimeringstjanst.se/sc/bankid-mock/",
-            "signResponseUrl": f"{base_url}/signport/signing/complete",
+            "idpEntityId": "https://eid.test.legitimeringstjanst.se/sc/mobilt-bankid/",
+            "signResponseUrl": f"{base_url}/my/orders/{order_id}/sign_complete?access_token={access_token}",
             "signatureAlgorithm": "",
             "loa": "http://id.swedenconnect.se/loa/1.0/uncertified-loa3",
             "certificateType": "PKC",
@@ -71,7 +71,7 @@ class RestApiSignport(models.Model):
             },
             "document": [
                 {
-                    "mimeType": "application/xml",  # TODO: use pdf instead?
+                    "mimeType": "application/pdf",  # TODO: use pdf instead?
                     "content": document_content,  # TODO: include document to sign
                     # "fileName": False,  # TODO: add filename
                     # "encoding": False  # TODO: should we use this?
@@ -87,12 +87,34 @@ class RestApiSignport(models.Model):
                 }
             ],
         }
-
+        _logger.warning(f"headers: {headers}")
+        _logger.warning(f"data_vals: {data_vals}")
         res = self.call_endpoint(
             method="POST",
             endpoint_url="/GetSignRequest",
             headers=headers,
             data_vals=data_vals,
         )
-        html_form = base64.b64decode(res.get("eidSignRequest"))
+        _logger.warning(f"res: {res}")
+        return res
+
+    def signport_post(self, data_vals = {}, endpoint = False):
+        headers = {
+            "accept": "application/json",
+            "Content-Type": "application/json; charset=utf8",
+        }
+
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+
+        data_vals["username"] = f"{self.user}"
+        data_vals["password"] = f"{self.password}"
+        _logger.warning(f"headers: {headers}")
+        _logger.warning(f"data_vals: {data_vals}")
+        res = self.call_endpoint(
+            method="POST",
+            endpoint_url=endpoint,
+            headers=headers,
+            data_vals=data_vals,
+        )
+        _logger.warning(f"res: {res}")
         return res

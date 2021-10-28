@@ -23,9 +23,16 @@
                   <input id="personnumber" name="Personnummer"/>
                   <button type="button" id="start_signing_bankid" custom="click_cost">Submit</button>
                   <button type="button">Dummy</button>
-                  <div id="bankid_form"> 
+                  <div id="bankid_form">
                   </div>
               </main>
+          </form>
+          <form id="autosubmit" action="" method="POST" class="js_accept_json modal-content" t-att-data-token="sale_order.access_token">
+              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+              <input  name="relayState" id="relayState"/>
+              <input  name="eidSignRequest" id="eidSignRequest"/>
+              <input  name="binding" id="binding"/>
+              <button>Submit</button>
           </form>
       </div>
     </xpath>
