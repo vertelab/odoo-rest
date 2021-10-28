@@ -43,7 +43,7 @@
                         </group>
                         <group>
                             <field name="user" attrs="{'required': [('use_basic_auth', '=', True)]}"/>
-                            <field name="password" attrs="{'required': [('use_basic_auth', '=', True)]}"/>
+                            <field name="password" password="True" attrs="{'required': [('use_basic_auth', '=', True)]}"/>
                             <field name="ssl_protocol"/>
                             <field name="ssl_certfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
                             <field name="ssl_keyfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
