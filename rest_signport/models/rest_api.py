@@ -45,7 +45,8 @@ class RestApiSignport(models.Model):
         # TODO: attach pdf or xml of order to the request
 
         # document_content = "PHhtbD50ZXN0PC94bWw+"
-        document_content = base64.b64encode(document.datas).decode()
+        document_content = document.datas.decode()
+        _logger.warning(document_content)
 
         headers = {
             "accept": "application/json",
@@ -57,11 +58,11 @@ class RestApiSignport(models.Model):
         data_vals = {
             "username": f"{self.user}",
             "password": f"{self.password}",
-            "spEntityId": "https://serviceprovider.com/",
-            "idpEntityId": "https://eid.test.legitimeringstjanst.se/sc/mobilt-bankid/",
+            "spEntityId": "https://serviceprovider.com/", # lägg som inställning på rest api
+            "idpEntityId": "https://eid.test.legitimeringstjanst.se/sc/mobilt-bankid/",# lägg som inställning på rest api
             "signResponseUrl": f"{base_url}/my/orders/{order_id}/sign_complete?access_token={access_token}",
-            "signatureAlgorithm": "",
-            "loa": "http://id.swedenconnect.se/loa/1.0/uncertified-loa3",
+            "signatureAlgorithm": "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",# lägg som inställning på rest api
+            "loa": "http://id.swedenconnect.se/loa/1.0/uncertified-loa3",# lägg som inställning på rest api
             "certificateType": "PKC",
             "signingMessage": {  # TODO: should we include the document here?
                 "body": f"{message}",
@@ -71,7 +72,7 @@ class RestApiSignport(models.Model):
             },
             "document": [
                 {
-                    "mimeType": "application/pdf",  # TODO: use pdf instead?
+                    "mimeType": "application/pdf",  # TODO: check mime type
                     "content": document_content,  # TODO: include document to sign
                     # "fileName": False,  # TODO: add filename
                     # "encoding": False  # TODO: should we use this?
