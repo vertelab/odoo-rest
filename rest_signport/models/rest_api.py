@@ -88,18 +88,15 @@ class RestApiSignport(models.Model):
                 }
             ],
         }
-        _logger.warning(f"headers: {headers}")
-        _logger.warning(f"data_vals: {data_vals}")
         res = self.call_endpoint(
             method="POST",
             endpoint_url="/GetSignRequest",
             headers=headers,
             data_vals=data_vals,
         )
-        _logger.warning(f"res: {res}")
         return res
 
-    def signport_post(self, data_vals = {}, endpoint = False):
+    def signport_post(self, data_vals={}, endpoint=False):
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json; charset=utf8",
@@ -109,13 +106,10 @@ class RestApiSignport(models.Model):
 
         data_vals["username"] = f"{self.user}"
         data_vals["password"] = f"{self.password}"
-        _logger.warning(f"headers: {headers}")
-        _logger.warning(f"data_vals: {data_vals}")
         res = self.call_endpoint(
             method="POST",
             endpoint_url=endpoint,
             headers=headers,
             data_vals=data_vals,
         )
-        _logger.warning(f"res: {res}")
         return res

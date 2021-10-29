@@ -66,9 +66,11 @@ class RestApi(models.Model):
             pass
         return ctx
 
-    def call_endpoint(self, method, endpoint_url, headers={}, data_vals=None):
+    def call_endpoint(self, method, endpoint_url, headers=None, data_vals=None):
         """Handles calls to endpoints."""
         self.ensure_one()
+
+        headers = headers or {}
 
         if self.use_basic_auth:
             # Use HTTP Basic access authentication
