@@ -160,7 +160,7 @@ class RestApi(models.Model):
     def create_log(
         self, endpoint_url, headers, method, data, message, state, direction="out"
     ):
-        self.ensure_one()
+        # self.ensure_one()
         base_url = self.env["ir.config_parameter"].get_param("web.base.url")
         log_vals = {
             "name": f"{method}: {self.url}{endpoint_url}"
