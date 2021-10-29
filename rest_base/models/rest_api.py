@@ -157,10 +157,15 @@ class RestApi(models.Model):
         Should be implemented by each implementation of this module"""
         raise UserError(_("This API has no test defined."))
 
-    def create_log(self, endpoint_url, headers, method, data, message, state):
+    def create_log(
+        self, endpoint_url, headers, method, data, message, state, direction="out"
+    ):
         self.ensure_one()
+        base_url = self.env["ir.config_parameter"].get_param("web.base.url")
         log_vals = {
-            "name": f"{method}: {self.url}{endpoint_url}",
+            "name": f"{method}: {self.url}{endpoint_url}"
+            if direction == "out"
+            else f"{method}: {base_url}{endpoint_url}",
             "rest_api_id": self.id,
             "state": state,
             "endpoint_url": endpoint_url,
@@ -168,6 +173,7 @@ class RestApi(models.Model):
             "method": method,
             "data": data,
             "message": message,
+            "direction": direction,
         }
         return self.env["rest.log"].create(log_vals)
 

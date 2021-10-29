@@ -24,3 +24,6 @@ class HttpRestRequest(HttpRequest):
             headers = {}
         headers["Content-Type"] = "application/json"
         return self.make_response(data, headers=headers, cookies=cookies)
+
+
+# TODO: override route decorator???
