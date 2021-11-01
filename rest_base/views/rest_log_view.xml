@@ -7,7 +7,7 @@
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
             <tree string="Logs">
-                <field name="direction"/>
+                <field name="direction" invisible="1"/>
                 <field name="name"/>
                 <field name="rest_api_id"/>
                 <field name="endpoint_url"/>
@@ -59,26 +59,50 @@
         </field>
     </record>
 
-    <record id="action_rest_log" model="ir.actions.act_window">
+    <record id="action_rest_log_out" model="ir.actions.act_window">
         <field name="name">Logs</field>
         <field name="res_model">rest.log</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[('direction', '=', 'out')]</field>
         <field name="view_id" ref="view_rest_log_tree"/>
     </record>
 
     <record id="action_view_rest_log_tree" model="ir.actions.act_window.view">
-        <field name="act_window_id" ref="action_rest_log"/>
+        <field name="act_window_id" ref="action_rest_log_out"/>
         <field name="sequence" eval="2"/>
         <field name="view_mode">tree</field>
         <field name="view_id" ref="view_rest_log_tree"/>
     </record>
 
     <record id="action_view_rest_log_form" model="ir.actions.act_window.view">
-        <field name="act_window_id" ref="action_rest_log"/>
+        <field name="act_window_id" ref="action_rest_log_out"/>
         <field name="sequence" eval="2"/>
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_rest_log_form"/>
     </record>
 
-    <menuitem action="action_rest_log" name="Logs" id="menu_rest_log" parent="menu_rest" sequence="20" groups="base.group_system"/>
+    <record id="action_rest_log_in" model="ir.actions.act_window">
+        <field name="name">Logs</field>
+        <field name="res_model">rest.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('direction', '=', 'in')]</field>
+        <field name="view_id" ref="view_rest_log_tree"/>
+    </record>
+
+    <record id="action_view_rest_log_tree" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_rest_log_in"/>
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_rest_log_tree"/>
+    </record>
+
+    <record id="action_view_rest_log_form" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_rest_log_in"/>
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_rest_log_form"/>
+    </record>
+
+    <menuitem action="action_rest_log_out" name="Logs Outgoing" id="menu_rest_log_out" parent="menu_rest" sequence="20" groups="base.group_system"/>
+    <menuitem action="action_rest_log_in" name="Logs Incoming" id="menu_rest_log_in" parent="menu_rest" sequence="25" groups="base.group_system"/>
 </odoo>
