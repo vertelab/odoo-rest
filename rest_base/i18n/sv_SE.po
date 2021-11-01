@@ -7,13 +7,23 @@ msgstr ""
 "Project-Id-Version: Odoo Server 14.0-20210929\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-01 12:48+0000\n"
-"PO-Revision-Date: 2021-10-01 12:48+0000\n"
+"PO-Revision-Date: 2021-11-01 10:40+0000\n"
 "Last-Translator: Daniel Eriksson <daniel.eriksson@vertel.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: rest_base
+#: model:ir.model.fields,help:rest_base.field_rest_api__password
+msgid "A password for authentication, if needed."
+msgstr "Lösenord, om nödvändigt."
+
+#. module: rest_base
+#: model:ir.model.fields,help:rest_base.field_rest_api__user
+msgid "A username for authentication, if needed."
+msgstr "Användarnamn, om nödvändigt."
 
 #. module: rest_base
 #: model:ir.model.fields,field_description:rest_base.field_rest_log__rest_api_id
@@ -29,24 +39,29 @@ msgid "APIs"
 msgstr "API:er"
 
 #. module: rest_base
+#: model:ir.model.fields,help:rest_base.field_rest_api__url
+msgid "Base URL to the API"
+msgstr "Grund-URL för API"
+
+#. module: rest_base
 #: model:ir.model,name:rest_base.model_rest_api
 msgid "Centralized model to make REST calls from Odoo."
 msgstr ""
 
 #. module: rest_base
-#: model:ir.model.fields,field_description:rest_base.field_rest_api__certfile
+#: model:ir.model.fields,field_description:rest_base.field_rest_api__ssl_certfile
 msgid "Certfile"
-msgstr "Certfil"
-
-#. module: rest_base
-#: model:ir.actions.server,name:rest_base.action
-msgid "Check nationality (nationalize.io)"
-msgstr ""
+msgstr "Cert-fil"
 
 #. module: rest_base
 #: model:ir.model.fields,field_description:rest_base.field_rest_log__data
 msgid "Data"
 msgstr ""
+
+#. module: rest_base
+#: model:ir.model.fields,field_description:rest_base.field_rest_log__direction
+msgid "Direction"
+msgstr "Riktning"
 
 #. module: rest_base
 #: model:ir.model.fields,field_description:rest_base.field_rest_log__endpoint_url
@@ -70,9 +85,19 @@ msgid "ID"
 msgstr ""
 
 #. module: rest_base
-#: model:ir.model.fields,field_description:rest_base.field_rest_api__keyfile
+#: model:ir.model.fields,help:rest_base.field_rest_api__log_success
+msgid "If off, the code will only log errors"
+msgstr "Endast felaktiga anrop loggas om av."
+
+#. module: rest_base
+#: model:ir.model.fields.selection,name:rest_base.selection__rest_log__direction__in
+msgid "In"
+msgstr ""
+
+#. module: rest_base
+#: model:ir.model.fields,field_description:rest_base.field_rest_api__ssl_keyfile
 msgid "Keyfile"
-msgstr "Nyckelfil"
+msgstr "Nyckel-fil"
 
 #. module: rest_base
 #: model_terms:ir.ui.view,arch_db:rest_base.view_rest_log_form
@@ -85,12 +110,22 @@ msgid "Log successes"
 msgstr "Logga lyckade anrop"
 
 #. module: rest_base
-#: model:ir.actions.act_window,name:rest_base.action_rest_log
-#: model:ir.ui.menu,name:rest_base.menu_rest_log
+#: model:ir.actions.act_window,name:rest_base.action_rest_log_in
+#: model:ir.actions.act_window,name:rest_base.action_rest_log_out
 #: model_terms:ir.ui.view,arch_db:rest_base.view_rest_api_form
 #: model_terms:ir.ui.view,arch_db:rest_base.view_rest_log_tree
 msgid "Logs"
 msgstr "Loggar"
+
+#. module: rest_base
+#: model:ir.ui.menu,name:rest_base.menu_rest_log_in
+msgid "Logs Incoming"
+msgstr "Loggar inkommande"
+
+#. module: rest_base
+#: model:ir.ui.menu,name:rest_base.menu_rest_log_out
+msgid "Logs Outgoing"
+msgstr "Loggar utgående"
 
 #. module: rest_base
 #: model:ir.model,name:rest_base.model_rest_log
@@ -130,6 +165,26 @@ msgid "OK"
 msgstr ""
 
 #. module: rest_base
+#: model:ir.model.fields.selection,name:rest_base.selection__rest_log__direction__out
+msgid "Out"
+msgstr "Ut"
+
+#. module: rest_base
+#: model:ir.model.fields,field_description:rest_base.field_rest_api__password
+msgid "Password"
+msgstr "Lösenord"
+
+#. module: rest_base
+#: model:ir.model.fields,help:rest_base.field_rest_api__ssl_certfile
+msgid "Path to the certfile"
+msgstr "Sökväg till cert-fil"
+
+#. module: rest_base
+#: model:ir.model.fields,help:rest_base.field_rest_api__ssl_keyfile
+msgid "Path to the keyfile"
+msgstr "Sökväg till nyckel-fil"
+
+#. module: rest_base
 #: model:ir.ui.menu,name:rest_base.menu_rest
 msgid "REST"
 msgstr ""
@@ -150,9 +205,30 @@ msgid "State"
 msgstr "Status"
 
 #. module: rest_base
+#: model_terms:ir.ui.view,arch_db:rest_base.view_rest_api_form
+msgid "Test connection"
+msgstr "Testa anslutning"
+
+#. module: rest_base
+#: code:addons/rest_base/models/rest_api.py:0
+#, python-format
+msgid "This API has no test defined."
+msgstr "Detta API har inget test definerat."
+
+#. module: rest_base
 #: model:ir.model.fields,field_description:rest_base.field_rest_api__url
 msgid "URL"
 msgstr ""
+
+#. module: rest_base
+#: model:ir.model.fields,field_description:rest_base.field_rest_api__use_basic_auth
+msgid "Use Basic Authentication"
+msgstr "Använd Basic Authentication"
+
+#. module: rest_base
+#: model:ir.model.fields,field_description:rest_base.field_rest_api__user
+msgid "User"
+msgstr "Användare"
 
 #. module: rest_base
 #: model:ir.model.fields,field_description:rest_base.field_rest_api__log_count
