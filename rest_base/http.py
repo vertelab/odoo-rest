@@ -94,34 +94,42 @@ def route(route=None, **kw):
 
     """
     routing = kw.copy()
-    assert 'type' not in routing or routing['type'] in ("http", "json")
+    assert "type" not in routing or routing["type"] in ("http", "json")
+
     def decorator(f):
         if route:
             if isinstance(route, list):
                 routes = route
             else:
                 routes = [route]
-            routing['routes'] = routes
+            routing["routes"] = routes
 
         @functools.wraps(f)
         def response_wrap(*args, **kw):
-            # if controller cannot be called with extra args (utm, debug, ...), call endpoint ignoring them
+            # if controller cannot be called with extra args (utm, debug, ...),
+            # call endpoint ignoring them
             params = inspect.signature(f).parameters.values()
             is_kwargs = lambda p: p.kind == inspect.Parameter.VAR_KEYWORD
             if not any(is_kwargs(p) for p in params):  # missing **kw
                 is_keyword_compatible = lambda p: p.kind in (
                     inspect.Parameter.POSITIONAL_OR_KEYWORD,
-                    inspect.Parameter.KEYWORD_ONLY)
+                    inspect.Parameter.KEYWORD_ONLY,
+                )
                 fargs = {p.name for p in params if is_keyword_compatible(p)}
-                ignored = ['<%s=%s>' % (k, kw.pop(k)) for k in list(kw) if k not in fargs]
+                ignored = [
+                    "<%s=%s>" % (k, kw.pop(k)) for k in list(kw) if k not in fargs
+                ]
                 if ignored:
-                    _logger.info("<function %s.%s> called ignoring args %s" % (f.__module__, f.__name__, ', '.join(ignored)))
+                    _logger.info(
+                        "<function %s.%s> called ignoring args %s"
+                        % (f.__module__, f.__name__, ", ".join(ignored))
+                    )
 
             # TODO: we need to catch responses that are generated when f
             # raises an exception. These are not logged at the moment
             response = f(*args, **kw)
 
-            if isinstance(response, Response) or f.routing_type == 'json':
+            if isinstance(response, Response) or f.routing_type == "json":
                 log_response(response, "ok")
                 return response
 
@@ -138,11 +146,14 @@ def route(route=None, **kw):
                 log_response(response, "ok")
                 return response
 
-            _logger.warning("<function %s.%s> returns an invalid response type for an http request" % (f.__module__, f.__name__))
+            _logger.warning(
+                "<function %s.%s> returns an invalid response type for an http request"
+                % (f.__module__, f.__name__)
+            )
             return response
 
         def log_response(response, state):
-            if routing.get('log', False):
+            if routing.get("log", False):
                 log_vals = {
                     "endpoint_url": request.httprequest.full_path,
                     "method": request.httprequest.method,
@@ -152,15 +163,17 @@ def route(route=None, **kw):
                     "message": response,
                     "headers": request.httprequest.headers,
                 }
-                request.env['rest.api'].sudo().create_log(**log_vals)
+                request.env["rest.api"].sudo().create_log(**log_vals)
 
         response_wrap.routing = routing
         response_wrap.original_func = f
         return response_wrap
+
     return decorator
 
 
 http.route = route
+
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, obj):  # pylint: disable=E0202,arguments-differ
