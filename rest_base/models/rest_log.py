@@ -21,3 +21,6 @@ class RestLog(models.Model):
     state = fields.Selection(
         string="State", selection=[("error", "Error"), ("ok", "OK")]
     )
+    direction = fields.Selection(
+        string="Direction", selection=[("in", "In"), ("out", "Out")], default="out"
+    )

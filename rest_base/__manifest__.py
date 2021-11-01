@@ -23,6 +23,7 @@
     "name": "Rest base",
     "description": """
 Implements a standardized way to call REST APIs from Odoo and logs errors.
+14.0.1.4.0 - Added support for logging incoming calls to odoo endpoints
 14.0.1.3.2 - Fixed potential bug with arguments to call_endpoint
 14.0.1.3.1 - Moved menu to main menu
 14.0.1.3.0 - Added better error handling
@@ -31,7 +32,7 @@ Implements a standardized way to call REST APIs from Odoo and logs errors.
 14.0.1.0.0 - Initial version
     """,
     "category": "REST",
-    "version": "14.0.1.3.2",
+    "version": "14.0.1.4.0",
     "depends": [
         "base",
     ],
