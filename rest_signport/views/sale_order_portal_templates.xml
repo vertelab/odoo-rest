@@ -21,31 +21,38 @@
                   </p>
                   Personnummer:
                   <input id="personnumber" name="Personnummer"/>
-                  <button type="button" id="start_signing_bankid" custom="click_cost">Submit</button>
-                  <button type="button">Dummy</button>
+                  <button type="button" id="start_signing_bankid" custom="click_cost">Signera</button>
                   <div id="bankid_form">
                   </div>
               </main>
           </form>
           <form id="autosubmit" action="" method="POST" class="js_accept_json modal-content" t-att-data-token="sale_order.access_token">
               <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-              <input  name="relayState" id="relayState"/>
-              <input  name="eidSignRequest" id="eidSignRequest"/>
-              <input  name="binding" id="binding"/>
-              <button>Submit</button>
+              <input type="hidden" name="relayState" id="relayState" />
+              <input type="hidden" name="eidSignRequest" id="eidSignRequest"/>
+              <input type="hidden" name="binding" id="binding"/>
           </form>
       </div>
     </xpath>
-      <!-- portal_sidebar -->
-      <xpath expr="//t[@t-set='title']" position="inside">
-        <button type="button" class="start_signing_bankid2" href="#">Submit</button>
-        <button type="button">Dummy</button>
-      </xpath>
-      <!-- portal_sidebar -->
   </template>
   <template id="assets_frontend" name="assets_frontend: signing bankid" inherit_id="web.assets_frontend">
        <xpath expr="//script[last()]" position="after">
           <script src="/rest_signport/static/src/js/main.js" type="text/javascript"/>
        </xpath>
   </template>
+
+  <record id="view_rest_api_form_signport" model="ir.ui.view">
+        <field name="name">rest.api.form.signport</field>
+        <field name="model">rest.api</field>
+        <field name="inherit_id" ref="rest_base.view_rest_api_form"/>
+        <field name="arch" type="xml">
+          <field name="password" position="after">
+            <field name="sp_entity_id" attrs="{'invisible': [('api_type',  '!=', 'signport')]}"/>
+            <field name="idp_entity_id" attrs="{'invisible': [('api_type',  '!=', 'signport')]}"/>
+            <field name="signature_algorithm" attrs="{'invisible': [('api_type',  '!=', 'signport')]}"/>
+            <field name="loa" attrs="{'invisible': [('api_type',  '!=', 'signport')]}"/>
+          </field>
+        </field>
+  </record>
+
 </odoo>

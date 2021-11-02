@@ -30,7 +30,8 @@ Implements REST calls to the SignPort API.
     "depends": [
         "rest_base",
         "sale",
-        "portal"
+        "portal",
+        "base_automation"
     ],
     "data": [
         "data/rest_api_data.xml",

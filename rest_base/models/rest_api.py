@@ -21,6 +21,7 @@ class RestApi(models.Model):
     _name = "rest.api"
     _description = "Centralized model to make REST calls from Odoo."
 
+    api_type = fields.Selection(string='Api type', selection=[('generic', 'Generic')], default='generic')
     name = fields.Char(string="Name")
     user = fields.Char(string="User", help="A username for authentication, if needed.")
     password = fields.Char(
