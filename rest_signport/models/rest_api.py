@@ -4,6 +4,7 @@ import logging
 import base64
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -11,6 +12,14 @@ _logger = logging.getLogger(__name__)
 class RestApiSignport(models.Model):
     _inherit = "rest.api"
 
+    sp_entity_id = fields.Char(string="Service provider url", help="Link to our website (spEntityId)")
+    idp_entity_id = fields.Char(string="Lägitimerings tjänst url", help="Link to signing servide (idpEntityId)")
+    signature_algorithm = fields.Char(string="Signature algorithm", help="Link to signature algorithm (signatureAlgorithm)")
+    loa = fields.Char(string="Loa", help="Link to loa (loa)")
+    api_type = fields.Selection(
+        selection_add=[('signport', 'Knowit signport')],
+        ondelete={'signport': 'set default'}
+    )
     def signport_get_sign_request(self):
         pass
 
@@ -32,6 +41,10 @@ class RestApiSignport(models.Model):
             return super(RestApiSignport, self).test_connection()
 
     def post_sign_sale_order(self, ssn, order_id, access_token, message=False):
+        # export_wizard = self.env['xml.export'].with_context({'active_model': 'sale.order', 'active_ids': order_id}).create({})
+        # action = export_wizard.download_xml_export()
+        # self.env['ir.attachment'].browse(action['res_id']).update({'res_id': order_id, 'res_model': 'sale.order'})
+
         document = self.env["ir.attachment"].search(
             [
                 ("res_model", "=", "sale.order"),
@@ -58,13 +71,13 @@ class RestApiSignport(models.Model):
         data_vals = {
             "username": f"{self.user}",
             "password": f"{self.password}",
-            "spEntityId": "https://serviceprovider.com/", # lägg som inställning på rest api
-            "idpEntityId": "https://eid.test.legitimeringstjanst.se/sc/mobilt-bankid/",# lägg som inställning på rest api
+            "spEntityId": f"{self.sp_entity_id}", #"https://serviceprovider.com/", # lägg som inställning på rest api
+            "idpEntityId": f"{self.idp_entity_id}",# "https://eid.test.legitimeringstjanst.se/sc/mobilt-bankid/",# lägg som inställning på rest api
             "signResponseUrl": f"{base_url}/my/orders/{order_id}/sign_complete?access_token={access_token}",
-            "signatureAlgorithm": "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",# lägg som inställning på rest api
-            "loa": "http://id.swedenconnect.se/loa/1.0/uncertified-loa3",# lägg som inställning på rest api
+            "signatureAlgorithm": f"{self.signature_algorithm}", #"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",# lägg som inställning på rest api
+            "loa": f"{self.loa}", #"http://id.swedenconnect.se/loa/1.0/uncertified-loa3",# lägg som inställning på rest api
             "certificateType": "PKC",
-            "signingMessage": {  # TODO: should we include the document here?
+            "signingMessage": {
                 "body": f"{message}",
                 "mustShow": True,
                 "encrypt": True,
@@ -72,11 +85,11 @@ class RestApiSignport(models.Model):
             },
             "document": [
                 {
-                    "mimeType": "application/pdf",  # TODO: check mime type
+                    "mimeType": document.mimetype,  # TODO: check mime type
                     "content": document_content,  # TODO: include document to sign
-                    # "fileName": False,  # TODO: add filename
+                    "fileName": document.display_name,  # TODO: add filename
                     # "encoding": False  # TODO: should we use this?
-                    # "documentName": False # TODO: what is this used for?
+                    "documentName": document.display_name, # TODO: what is this used for?
                     "adesType": "bes",  # TODO: what is "ades"? "bes" or "none"
                 }
             ],
@@ -96,7 +109,7 @@ class RestApiSignport(models.Model):
         )
         return res
 
-    def signport_post(self, data_vals={}, endpoint=False):
+    def signport_post(self, data_vals={}, order_id=False, endpoint=False):
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json; charset=utf8",
@@ -112,4 +125,19 @@ class RestApiSignport(models.Model):
             headers=headers,
             data_vals=data_vals,
         )
+        _logger.warning(f"FINAL res: {res}")
+        document = self.env["ir.attachment"].search(
+            [
+                ("res_model", "=", "sale.order"),
+                ("res_id", "=", order_id),
+                ("mimetype", "=", "application/pdf"),
+            ],
+            limit=1,
+        )
+        self.env['ir.attachment'].create({'name': f"{document.display_name} (Signed)", 'type': 'binary', 'res_model': 'sale.order', 'res_id': order_id, 'datas': res['document'][0]['content']})
+        self.env['ir.attachment'].create({'name': f"signerCa", 'type': 'binary', 'res_model': 'sale.order', 'res_id': order_id, 'datas': res['signerCa']})
+        self.env['ir.attachment'].create({'name': f"assertion", 'type': 'binary', 'res_model': 'sale.order', 'res_id': order_id, 'datas': res['assertion']})
+        self.env['ir.attachment'].create({'name': f"relayState", 'type': 'binary', 'res_model': 'sale.order', 'res_id': order_id, 'datas': base64.b64encode(res['relayState'].encode())})
+        sale_order = self.env['sale.order'].browse(order_id)
+        sale_order.update({'state': 'sale', 'signed_by': self.env.user.name, 'signed_on': datetime.now()})
         return res

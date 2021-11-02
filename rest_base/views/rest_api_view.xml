@@ -42,6 +42,7 @@
                             <field name="use_basic_auth"/>
                         </group>
                         <group>
+                            <field name="api_type"/>
                             <field name="user" attrs="{'required': [('use_basic_auth', '=', True)]}"/>
                             <field name="password" password="True" attrs="{'required': [('use_basic_auth', '=', True)]}"/>
                             <field name="ssl_protocol"/>
