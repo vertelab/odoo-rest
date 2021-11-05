@@ -88,7 +88,7 @@ class KnowitController(http.Controller):
         }
 
         api_signport = self.get_signport_api()
-        res = api_signport.signport_post(data, order_id, "/CompleteSigning")
+        res = api_signport.sudo().signport_post(data, order_id, "/CompleteSigning")
         res_json = json.dumps(res)
         try:
             order_sudo = request.env["sale.order"].sudo().browse(order_id)
@@ -134,7 +134,7 @@ class KnowitController(http.Controller):
         if not ssn:
             return False
         api_signport = self.get_signport_api()
-        res = api_signport.post_sign_sale_order(
+        res = api_signport.sudo().post_sign_sale_order(
             ssn=ssn,
             order_id=order_id,
             access_token=data.get("params", {}).get("access_token"),
