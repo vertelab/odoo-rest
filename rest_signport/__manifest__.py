@@ -23,10 +23,11 @@
     "name": "Rest SignPort",
     "description": """
 Implements REST calls to the SignPort API.
+14.0.0.0.1 - Added a few sudo() calls and pep8-formatted
 14.0.0.0.0 - Initial version
     """,
     "category": "REST",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "depends": [
         "rest_base",
         "sale",
