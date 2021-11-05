@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem name="REST" id="menu_rest" parent="" sequence="400" groups="base.group_system"/>
+    <menuitem name="REST" id="menu_rest" parent="" sequence="295" groups="base.group_system"/>
 </odoo>
