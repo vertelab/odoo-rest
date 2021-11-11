@@ -178,7 +178,7 @@ class RestApi(models.Model):
         return self.env["rest.log"].create(log_vals)
 
     def action_view_rest_log(self):
-        action = self.env["ir.actions.actions"]._for_xml_id("rest_base.action_rest_log")
+        action = self.env["ir.actions.actions"]._for_xml_id("rest_base.action_rest_log_out")
         action["domain"] = [("rest_api_id", "=", self.id)]
         return action
 
