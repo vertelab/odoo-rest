@@ -22,17 +22,19 @@
 {
     "name": "Rest base",
     "description": """
-Implements a standardized way to call REST APIs from Odoo and logs errors.
-14.0.1.4.0 - Added support for logging incoming calls to odoo endpoints
-14.0.1.3.2 - Fixed potential bug with arguments to call_endpoint
-14.0.1.3.1 - Moved menu to main menu
-14.0.1.3.0 - Added better error handling
-14.0.1.2.0 - Added a button for testing the connection to the API
-14.0.1.1.0 - Added better errorhandling and support for HTTP Basic Authentication
-14.0.1.0.0 - Initial version
+This module is maintained from: https://github.com/vertelab/odoo-rest \n 
+Implements a standardized way to call REST APIs from Odoo and logs errors.\n 
+14.0.1.5.0 - Moved the top menu to Settings->Technical \n 
+14.0.1.4.0 - Added support for logging incoming calls to odoo endpoints \n 
+14.0.1.3.2 - Fixed potential bug with arguments to call_endpoint \n 
+14.0.1.3.1 - Moved menu to main menu \n 
+14.0.1.3.0 - Added better error handling \n 
+14.0.1.2.0 - Added a button for testing the connection to the API \n 
+14.0.1.1.0 - Added better errorhandling and support for HTTP Basic Authentication \n 
+14.0.1.0.0 - Initial version \n 
     """,
     "category": "REST",
-    "version": "14.0.1.4.0",
+    "version": "14.0.1.5.0",
     "depends": [
         "base",
     ],
