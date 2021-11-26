@@ -32,7 +32,7 @@ Implements REST calls to the SignPort API.
         "rest_base",
         "sale",
         "portal",
-        "base_automation"
+        "base_automation",
     ],
     "data": [
         "data/rest_api_data.xml",

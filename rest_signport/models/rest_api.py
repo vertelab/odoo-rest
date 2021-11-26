@@ -48,7 +48,7 @@ class RestApiSignport(models.Model):
         else:
             return super(RestApiSignport, self).test_connection()
 
-    def post_sign_sale_order(self, ssn, order_id, access_token, message=False):
+    def post_sign_sale_order(self, ssn, order_id, access_token, message=False, sign_type="customer", approval_id=False):
         # export_wizard = self.env['xml.export'].with_context({'active_model': 'sale.order', 'active_ids': order_id}).create({})
         # action = export_wizard.download_xml_export()
         # self.env['ir.attachment'].browse(action['res_id']).update({'res_id': order_id, 'res_model': 'sale.order'})
@@ -79,13 +79,18 @@ class RestApiSignport(models.Model):
         }
 
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        if sign_type == "customer":
+            response_url = f"{base_url}/my/orders/{order_id}/sign_complete?access_token={access_token}"
+        elif sign_type == "employee":
+            response_url = f"{base_url}/web/{order_id}/{approval_id}/sign_complete?access_token={access_token}"
+
 
         data_vals = {
             "username": f"{self.user}",
             "password": f"{self.password}",
             "spEntityId": f"{self.sp_entity_id}",  # "https://serviceprovider.com/", # lägg som inställning på rest api
             "idpEntityId": f"{self.idp_entity_id}",  # "https://eid.test.legitimeringstjanst.se/sc/mobilt-bankid/",# lägg som inställning på rest api
-            "signResponseUrl": f"{base_url}/my/orders/{order_id}/sign_complete?access_token={access_token}",
+            "signResponseUrl": response_url,
             "signatureAlgorithm": f"{self.signature_algorithm}",  # "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",# lägg som inställning på rest api
             "loa": f"{self.loa}",  # "http://id.swedenconnect.se/loa/1.0/uncertified-loa3",# lägg som inställning på rest api
             "certificateType": "PKC",
@@ -121,7 +126,7 @@ class RestApiSignport(models.Model):
         )
         return res
 
-    def signport_post(self, data_vals={}, order_id=False, endpoint=False):
+    def signport_post(self, data_vals={}, order_id=False, endpoint=False, sign_type="customer"):
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json; charset=utf8",
@@ -138,6 +143,7 @@ class RestApiSignport(models.Model):
             data_vals=data_vals,
         )
         _logger.warning(f"FINAL res: {res}")
+        username = self.env.user.name
         document = (
             self.env["ir.attachment"]
             .sudo()
@@ -146,52 +152,61 @@ class RestApiSignport(models.Model):
                     ("res_model", "=", "sale.order"),
                     ("res_id", "=", order_id),
                     ("mimetype", "=", "application/pdf"),
+                    ("name", "=", f"{self.env['sale.order'].browse(order_id).name}.pdf")
                 ],
                 limit=1,
             )
         )
-        self.env["ir.attachment"].sudo().create(
-            {
-                "name": f"{document.display_name} (Signed)",
-                "type": "binary",
-                "res_model": "sale.order",
-                "res_id": order_id,
-                "datas": res["document"][0]["content"],
-            }
-        )
-        self.env["ir.attachment"].sudo().create(
-            {
-                "name": f"signerCa",
-                "type": "binary",
-                "res_model": "sale.order",
-                "res_id": order_id,
-                "datas": res["signerCa"],
-            }
-        )
-        self.env["ir.attachment"].sudo().create(
-            {
-                "name": f"assertion",
-                "type": "binary",
-                "res_model": "sale.order",
-                "res_id": order_id,
-                "datas": res["assertion"],
-            }
-        )
-        self.env["ir.attachment"].sudo().create(
-            {
-                "name": f"relayState",
-                "type": "binary",
-                "res_model": "sale.order",
-                "res_id": order_id,
-                "datas": base64.b64encode(res["relayState"].encode()),
-            }
-        )
-        sale_order = self.env["sale.order"].sudo().browse(order_id)
-        sale_order.update(
-            {
-                "state": "sale",
-                "signed_by": self.env.user.name,
-                "signed_on": datetime.now(),
-            }
-        )
+        if sign_type == "employee":
+            approval_line = self.env["approval.line"].search([("sale_order_id", "=", order_id), ("approver_id", "=", self.env.uid)], limit=1)
+            approval_line.signed_document = res["document"][0]["content"]
+            approval_line.signer_ca = res["signerCa"]
+            approval_line.assertion = res["assertion"]
+            approval_line.relay_state = base64.b64encode(res["relayState"].encode())
+        else:
+            self.env["ir.attachment"].sudo().create(
+                {
+                    "name": f"{sign_type}: {self.env.user.name} - {document.display_name} - (Signed)",
+                    "type": "binary",
+                    "res_model": "sale.order",
+                    "res_id": order_id,
+                    "datas": res["document"][0]["content"],
+                }
+            )
+            self.env["ir.attachment"].sudo().create(
+                {
+                    "name": f"{sign_type}: {self.env.user.name} - signerCa",
+                    "type": "binary",
+                    "res_model": "sale.order",
+                    "res_id": order_id,
+                    "datas": res["signerCa"],
+                }
+            )
+            self.env["ir.attachment"].sudo().create(
+                {
+                    "name": f"{sign_type}: {self.env.user.name} - assertion",
+                    "type": "binary",
+                    "res_model": "sale.order",
+                    "res_id": order_id,
+                    "datas": res["assertion"],
+                }
+            )
+            self.env["ir.attachment"].sudo().create(
+                {
+                    "name": f"{sign_type}: {self.env.user.name} - relayState",
+                    "type": "binary",
+                    "res_model": "sale.order",
+                    "res_id": order_id,
+                    "datas": base64.b64encode(res["relayState"].encode()),
+                }
+            )
+            if sign_type == "customer":
+                sale_order = self.env["sale.order"].sudo().browse(order_id)
+                sale_order.update(
+                    {
+                        "state": "sale",
+                        "signed_by": self.env.user.name,
+                        "signed_on": datetime.now(),
+                    }
+                )
         return res
