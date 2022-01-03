@@ -161,7 +161,7 @@ class RestApiSignport(models.Model):
             "accept": "application/json",
             "Content-Type": "application/json; charset=utf8",
         }
-
+        _logger.warning("signport post"*99)
         base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
 
         data_vals["username"] = f"{self.user}"
@@ -194,6 +194,7 @@ class RestApiSignport(models.Model):
             approval_line.assertion = res["assertion"]
             approval_line.relay_state = base64.b64encode(res["relayState"].encode())
         else:
+            _logger.warning("signport post else"*99)
             self.env["ir.attachment"].sudo().create(
                 {
                     "name": f"{sign_type}: {self.env.user.name} - {document.display_name} - (Signed)",
@@ -232,11 +233,25 @@ class RestApiSignport(models.Model):
             )
             if sign_type == "customer":
                 sale_order = self.env["sale.order"].sudo().browse(order_id)
-                sale_order.update(
+
+                sale_order.signed_document = res["document"][0]["content"]
+                sale_order.signer_ca = res["signerCa"]
+                sale_order.assertion = res["assertion"]
+                sale_order.relay_state = base64.b64encode(res["relayState"].encode())
+                sale_order.write(
                     {
                         "state": "sale",
                         "signed_by": self.env.user.name,
                         "signed_on": datetime.now(),
                     }
                 )
+                _logger.warning(sale_order.read())
         return res
+
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+
+    signed_document = fields.Binary(string='Signed Document', readonly=1)
+    signer_ca = fields.Binary(string='Signer Ca', readonly=1)
+    assertion = fields.Binary(string='Assertion', readonly=1)
+    relay_state = fields.Binary(string='Relay State', readonly=1)

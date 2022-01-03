@@ -86,7 +86,7 @@ class KnowitController(http.Controller):
             "eidSignResponse": res["EidSignResponse"],
             "binding": res["Binding"],
         }
-
+        _logger.warning("complete_signing controller"*99)
         api_signport = self.get_signport_api()
         res = api_signport.sudo().signport_post(data, order_id, "/CompleteSigning")
         res_json = json.dumps(res)
