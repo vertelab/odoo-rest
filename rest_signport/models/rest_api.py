@@ -5,6 +5,7 @@ import base64
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from datetime import datetime
+import uuid
 
 _logger = logging.getLogger(__name__)
 
@@ -83,9 +84,29 @@ class RestApiSignport(models.Model):
             response_url = f"{base_url}/my/orders/{order_id}/sign_complete?access_token={access_token}"
         elif sign_type == "employee":
             response_url = f"{base_url}/web/{order_id}/{approval_id}/sign_complete?access_token={access_token}"
+        
+        guid = str(uuid.uuid1())
+        _logger.warning(f" {guid}")
+        add_signature_page_vals = {
+        "clientCorrelationId": guid,
+        "documents": [
+            {
+            "signaturePageTemplateId": "e33d2a21-1d23-4b4f-9baa-def11634ceb4",
+            "signaturePagePosition": "last",
+            "content": document_content
+            }
+        ]
+        }
 
+        res = self.call_endpoint(
+            method="POST",
+            endpoint_url="/AddSignaturePage",
+            headers=headers,
+            data_vals=add_signature_page_vals,
+        )
+        document_content = res['documents'][0]['content']
 
-        data_vals = {
+        get_sign_request_vals = {
             "username": f"{self.user}",
             "password": f"{self.password}",
             "spEntityId": f"{self.sp_entity_id}",  # "https://serviceprovider.com/", # lägg som inställning på rest api
@@ -100,6 +121,15 @@ class RestApiSignport(models.Model):
                 "encrypt": True,
                 "mimeType": "text",
             },
+            # "signaturePage": {
+            #     "initialPosition": 'last',
+            #     "templateId": 'e33d2a21-1d23-4b4f-9baa-def11634ceb4',
+            #     "allowRemovalOfExistingSignatures": False,
+            #     "signerAttributes": {
+            #         "name": self.env.user.name
+            #     },
+            #     "signatureTitle": 'Signed by',
+            # },
             "document": [
                 {
                     "mimeType": document.mimetype,  # TODO: check mime type
@@ -122,7 +152,7 @@ class RestApiSignport(models.Model):
             method="POST",
             endpoint_url="/GetSignRequest",
             headers=headers,
-            data_vals=data_vals,
+            data_vals=get_sign_request_vals,
         )
         return res
 
