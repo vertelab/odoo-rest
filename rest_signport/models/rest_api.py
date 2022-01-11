@@ -84,7 +84,7 @@ class RestApiSignport(models.Model):
             response_url = f"{base_url}/my/orders/{order_id}/sign_complete?access_token={access_token}"
         elif sign_type == "employee":
             response_url = f"{base_url}/web/{order_id}/{approval_id}/sign_complete?access_token={access_token}"
-        
+        _logger.warning("before add signature page")
         guid = str(uuid.uuid1())
         _logger.warning(f" {guid}")
         add_signature_page_vals = {
@@ -98,13 +98,14 @@ class RestApiSignport(models.Model):
         ]
         }
 
-        res = self.call_endpoint(
-            method="POST",
-            endpoint_url="/AddSignaturePage",
-            headers=headers,
-            data_vals=add_signature_page_vals,
-        )
-        document_content = res['documents'][0]['content']
+        # res = self.call_endpoint(
+        #     method="POST",
+        #     endpoint_url="/AddSignaturePage",
+        #     headers=headers,
+        #     data_vals=add_signature_page_vals,
+        # )
+        # _logger.warning(f"resresres: {res}")
+        # document_content = res['documents'][0]['content']
 
         get_sign_request_vals = {
             "username": f"{self.user}",
@@ -240,11 +241,11 @@ class RestApiSignport(models.Model):
                 sale_order.relay_state = base64.b64encode(res["relayState"].encode())
                 sale_order.write(
                     {
-                        "state": "sale",
                         "signed_by": self.env.user.name,
                         "signed_on": datetime.now(),
                     }
                 )
+                sale_order.action_confirm()
                 _logger.warning(sale_order.read())
         return res
 
