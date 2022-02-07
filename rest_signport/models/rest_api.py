@@ -70,9 +70,10 @@ class RestApiSignport(models.Model):
             return False
         # TODO: attach pdf or xml of order to the request
 
-        # document_content = "PHhtbD50ZXN0PC94bWw+"
-        document_content = document.datas.decode()
-        # document_content = base64.b64decode(document.datas)
+        if self.env['sale.order'].browse(order_id).signed_document:
+            document_content = self.env['sale.order'].browse(order_id).signed_document.decode()
+        else:
+            document_content = document.datas.decode()
         _logger.warning(document_content)
 
         headers = {
@@ -99,14 +100,14 @@ class RestApiSignport(models.Model):
         ]
         }
 
-        # res = self.call_endpoint(
-        #     method="POST",
-        #     endpoint_url="/AddSignaturePage",
-        #     headers=headers,
-        #     data_vals=add_signature_page_vals,
-        # )
-        # _logger.warning(f"resresres: {res}")
-        # document_content = res['documents'][0]['content']
+        res = self.call_endpoint(
+            method="POST",
+            endpoint_url="/AddSignaturePage",
+            headers=headers,
+            data_vals=add_signature_page_vals,
+        )
+        _logger.warning(f"resresres: {res}")
+        document_content = res['documents'][0]['content']
 
         get_sign_request_vals = {
             "username": f"{self.user}",
@@ -140,15 +141,16 @@ class RestApiSignport(models.Model):
                     "value": f"{ssn}",
                 }
             ],
-            # "signaturePage": {
-            #     "initialPosition": "last",
-            #     "templateId": "e33d2a21-1d23-4b4f-9baa-def11634ceb4",
-            #     "allowRemovalOfExistingSignatures": False,
-            #     "signerAttributes": {
-            #         "name": "Byggare bob",
-            #     },
-            #     "signatureTitle": "Signed by",
-            # },
+            "signaturePage": {
+                "initialPosition": "last",
+                "templateId": "e33d2a21-1d23-4b4f-9baa-def11634ceb4",
+                "allowRemovalOfExistingSignatures": False,
+                "signerAttributes": [{
+                    "label": "Namn",
+                    "value": self.env.user.name
+                }],
+                "signatureTitle": "Signed by",
+            },
         }
         res = self.call_endpoint(
             method="POST",
@@ -196,6 +198,7 @@ class RestApiSignport(models.Model):
             )
         )
         if sign_type == "employee":
+            self.env['sale.order'].browse(order_id).signed_document = res["document"][0]["content"]
             approval_line = self.env["approval.line"].search([("sale_order_id", "=", order_id), ("approver_id", "=", self.env.uid)], limit=1)
             approval_line.signed_document = res["document"][0]["content"]
             approval_line.signer_ca = res["signerCa"]
