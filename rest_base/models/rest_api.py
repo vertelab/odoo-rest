@@ -68,6 +68,10 @@ class RestApi(models.Model):
         return ctx
 
     def call_endpoint(self, method, endpoint_url, headers=None, data_vals=None):
+        #_logger.warning(f"{method=}")
+        #_logger.warning(f"{endpoint_url=}")
+        #_logger.warning(f"{headers=}")
+        #_logger.warning(f"{data_valse=}")
         """Handles calls to endpoints."""
         self.ensure_one()
 

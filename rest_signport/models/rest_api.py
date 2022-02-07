@@ -72,6 +72,7 @@ class RestApiSignport(models.Model):
 
         # document_content = "PHhtbD50ZXN0PC94bWw+"
         document_content = document.datas.decode()
+        # document_content = base64.b64decode(document.datas)
         _logger.warning(document_content)
 
         headers = {
@@ -91,9 +92,9 @@ class RestApiSignport(models.Model):
         "clientCorrelationId": guid,
         "documents": [
             {
+            "content": document_content,
             "signaturePageTemplateId": "e33d2a21-1d23-4b4f-9baa-def11634ceb4",
             "signaturePagePosition": "last",
-            "content": document_content
             }
         ]
         }
@@ -122,15 +123,6 @@ class RestApiSignport(models.Model):
                 "encrypt": True,
                 "mimeType": "text",
             },
-            # "signaturePage": {
-            #     "initialPosition": 'last',
-            #     "templateId": 'e33d2a21-1d23-4b4f-9baa-def11634ceb4',
-            #     "allowRemovalOfExistingSignatures": False,
-            #     "signerAttributes": {
-            #         "name": self.env.user.name
-            #     },
-            #     "signatureTitle": 'Signed by',
-            # },
             "document": [
                 {
                     "mimeType": document.mimetype,  # TODO: check mime type
@@ -148,6 +140,15 @@ class RestApiSignport(models.Model):
                     "value": f"{ssn}",
                 }
             ],
+            # "signaturePage": {
+            #     "initialPosition": "last",
+            #     "templateId": "e33d2a21-1d23-4b4f-9baa-def11634ceb4",
+            #     "allowRemovalOfExistingSignatures": False,
+            #     "signerAttributes": {
+            #         "name": "Byggare bob",
+            #     },
+            #     "signatureTitle": "Signed by",
+            # },
         }
         res = self.call_endpoint(
             method="POST",
@@ -174,6 +175,12 @@ class RestApiSignport(models.Model):
             data_vals=data_vals,
         )
         _logger.warning(f"FINAL res: {res}")
+        if not res['status']['success']:
+            if 'not valid personal number' in res['status']['statusCodeDescription']:
+                raise UserError('Invalid Personalnumber, please format it like "YYYYMMDDXXXX"')
+            else:
+                raise UserError(res)
+
         username = self.env.user.name
         document = (
             self.env["ir.attachment"]
