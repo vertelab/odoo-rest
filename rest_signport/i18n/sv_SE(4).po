@@ -1,0 +1,152 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rest_signport
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0-20210914\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-22 13:07+0000\n"
+"PO-Revision-Date: 2022-02-22 14:30+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sv_SE\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid "<span>Accepted on the behalf of:</span>"
+msgstr "<span>Accepterad på uppdrag av:</span>"
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid "<span>By signing this proposal, I agree to the following terms:</span>"
+msgstr "<span>Genom att signera det här avtalet, går jag med på följande vilkor:</span>"
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid "<span>For an amount of:</span>"
+msgstr "<span>För ett pris av:</span>"
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid "<span>With payment terms:</span>"
+msgstr "<span>Med betalningsvillkor:</span>"
+
+#. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api__api_type
+msgid "Api type"
+msgstr "Api typ"
+
+#. module: rest_signport
+#: model:ir.model,name:rest_signport.model_rest_api
+msgid "Centralized model to make REST calls from Odoo."
+msgstr ""
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid "Close"
+msgstr "Stäng"
+
+#. module: rest_signport
+#: code:addons/rest_signport/models/rest_api.py:0
+#, python-format
+msgid "Connection is working"
+msgstr "Integrationen fungerar"
+
+#. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api__id
+msgid "ID"
+msgstr ""
+
+#. module: rest_signport
+#: model:ir.model.fields.selection,name:rest_signport.selection__rest_api__api_type__signport
+msgid "Knowit signport"
+msgstr ""
+
+#. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: rest_signport
+#: model:ir.model.fields,help:rest_signport.field_rest_api__loa
+msgid "Link to loa (loa)"
+msgstr "Länk till loa"
+
+#. module: rest_signport
+#: model:ir.model.fields,help:rest_signport.field_rest_api__sp_entity_id
+msgid "Link to our website (spEntityId)"
+msgstr "Länk till vår websida (spEntityId)"
+
+#. module: rest_signport
+#: model:ir.model.fields,help:rest_signport.field_rest_api__signature_algorithm
+msgid "Link to signature algorithm (signatureAlgorithm)"
+msgstr "Länk till signatur algoritmen (signatureAlgorithm)"
+
+#. module: rest_signport
+#: model:ir.model.fields,help:rest_signport.field_rest_api__idp_entity_id
+msgid "Link to signing servide (idpEntityId)"
+msgstr "Länk till signerings servicen (idpEntityId)"
+
+#. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api__loa
+msgid "Loa"
+msgstr ""
+
+#. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api__idp_entity_id
+msgid "Lägitimerings tjänst url"
+msgstr ""
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid "Personnummer:"
+msgstr ""
+
+#. module: rest_signport
+#: code:addons/rest_signport/controllers/main.py:0
+#, python-format
+msgid "Quotation viewed by customer %s"
+msgstr "Offert visad av kund %s"
+
+#. module: rest_signport
+#: model:base.automation,name:rest_signport.sale_invoice_update_trigger
+#: model:ir.actions.server,name:rest_signport.sale_order_invoice_action
+msgid "Sales Order Invoice Trigger"
+msgstr ""
+
+#. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api__sp_entity_id
+msgid "Service provider url"
+msgstr ""
+
+#. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api__signature_algorithm
+msgid "Signature algorithm"
+msgstr ""
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid "Signera"
+msgstr ""
+
+#. module: rest_signport
+#: code:addons/rest_signport/models/rest_api.py:0
+#, python-format
+msgid "The connection is not working"
+msgstr "Integrationen fungerar inte"
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid "Validate Order"
+msgstr "Validera offert"
