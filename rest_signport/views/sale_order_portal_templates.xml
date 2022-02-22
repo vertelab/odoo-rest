@@ -54,17 +54,5 @@
           </field>
         </field>
   </record>
-    <record model="ir.ui.view" id="sale_order_signport_inherited">
-      <field name="name">sale.order.form.signport.inherited</field>
-      <field name="model">sale.order</field>
-      <field name="inherit_id" ref="sale.view_order_form"/>
-      <field name="arch" type="xml">
-        <field name="signed_on" position="after">
-          <field name="signed_document"/>
-          <field name="signer_ca"/>
-          <field name="assertion"/>
-          <field name="relay_state"/>
-        </field>
-      </field>
-    </record>
+    
 </odoo>
