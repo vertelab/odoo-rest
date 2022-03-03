@@ -51,6 +51,8 @@
             <field name="idp_entity_id" attrs="{'invisible': [('api_type',  '!=', 'signport')]}"/>
             <field name="signature_algorithm" attrs="{'invisible': [('api_type',  '!=', 'signport')]}"/>
             <field name="loa" attrs="{'invisible': [('api_type',  '!=', 'signport')]}"/>
+            <field name="customer_string" attrs="{'invisible': [('api_type',  '!=', 'signport')]}"/>
+            <field name="employee_string" attrs="{'invisible': [('api_type',  '!=', 'signport')]}"/>
           </field>
         </field>
   </record>

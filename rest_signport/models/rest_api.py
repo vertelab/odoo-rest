@@ -28,6 +28,8 @@ class RestApiSignport(models.Model):
         selection_add=[("signport", "Knowit signport")],
         ondelete={"signport": "set default"},
     )
+    customer_string = fields.Char(string="Customer signature label", default="Customer")
+    employee_string = fields.Char(string="Employee signature label", default="Our company")
 
 
     def test_connection(self):

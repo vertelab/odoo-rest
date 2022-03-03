@@ -21,6 +21,7 @@ _logger = logging.getLogger(__name__)
 
 class KnowitController(http.Controller):
     def _order_get_page_view_values(self, order, access_token, **kwargs):
+        _logger.warning("1"*999)
         values = {
             "sale_order": order,
             "token": access_token,
@@ -81,6 +82,7 @@ class KnowitController(http.Controller):
         website=True,
     )
     def complete_signing(self, order_id, access_token, **res):
+        _logger.warning("2"*999)
         html_form = base64.b64decode(res.get("EidSignResponse")).decode()
         data = {
             "relayState": res["RelayState"],
@@ -129,7 +131,7 @@ class KnowitController(http.Controller):
         methods=["POST"],
     )
     def start_sign(self, order_id):
-
+        _logger.warning("3"*999)
         data = json.loads(request.httprequest.data)
         ssn = data.get("params", {}).get("ssn")
         if not ssn:
