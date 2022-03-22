@@ -4,18 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0-20211230\n"
+"Project-Id-Version: Odoo Server 14.0-20210312\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-03 13:38+0000\n"
-"PO-Revision-Date: 2022-03-03 14:40+0100\n"
+"POT-Creation-Date: 2022-03-22 08:47+0000\n"
+"PO-Revision-Date: 2022-03-22 08:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: sv\n"
-"X-Generator: Poedit 2.3\n"
 
 #. module: rest_signport
 #: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
@@ -26,8 +24,8 @@ msgstr "<span>Accepterad på uppdrag av:</span>"
 #: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
 msgid "<span>By signing this proposal, I agree to the following terms:</span>"
 msgstr ""
-"<span>Genom att signera det här avtalet, går jag med på följande vilkor:</"
-"span>"
+"<span>Genom att signera det här avtalet, går jag med på följande "
+"vilkor:</span>"
 
 #. module: rest_signport
 #: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
@@ -38,6 +36,11 @@ msgstr "<span>För ett pris av:</span>"
 #: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
 msgid "<span>With payment terms:</span>"
 msgstr "<span>Med betalningsvillkor:</span>"
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid "Accept and sign"
+msgstr "Acceptera och signera"
 
 #. module: rest_signport
 #: model:ir.model.fields,field_description:rest_signport.field_rest_api__api_type
@@ -81,6 +84,11 @@ msgid "ID"
 msgstr ""
 
 #. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api__idp_entity_id
+msgid "Identity service url"
+msgstr "Legitimeringstjänst url"
+
+#. module: rest_signport
 #: model:ir.model.fields.selection,name:rest_signport.selection__rest_api__api_type__signport
 msgid "Knowit signport"
 msgstr ""
@@ -91,9 +99,19 @@ msgid "Last Modified on"
 msgstr "Senast redigerad"
 
 #. module: rest_signport
+#: model:ir.model.fields,field_description:rest_signport.field_rest_api__loa
+msgid "Levels of assurance"
+msgstr "Säkerhetsnivåer"
+
+#. module: rest_signport
+#: model:ir.model.fields,help:rest_signport.field_rest_api__idp_entity_id
+msgid "Link to identity service (idpEntityId)"
+msgstr "Länk till legitimeringstjänst (idpEntityId)"
+
+#. module: rest_signport
 #: model:ir.model.fields,help:rest_signport.field_rest_api__loa
-msgid "Link to loa (loa)"
-msgstr "Länk till loa"
+msgid "Link to levels of assurance (loa)"
+msgstr "Länk till säkerhetsnivåer (loa)"
 
 #. module: rest_signport
 #: model:ir.model.fields,help:rest_signport.field_rest_api__sp_entity_id
@@ -104,21 +122,6 @@ msgstr "Länk till vår websida (spEntityId)"
 #: model:ir.model.fields,help:rest_signport.field_rest_api__signature_algorithm
 msgid "Link to signature algorithm (signatureAlgorithm)"
 msgstr "Länk till signatur algoritmen (signatureAlgorithm)"
-
-#. module: rest_signport
-#: model:ir.model.fields,help:rest_signport.field_rest_api__idp_entity_id
-msgid "Link to signing servide (idpEntityId)"
-msgstr "Länk till signerings servicen (idpEntityId)"
-
-#. module: rest_signport
-#: model:ir.model.fields,field_description:rest_signport.field_rest_api__loa
-msgid "Loa"
-msgstr ""
-
-#. module: rest_signport
-#: model:ir.model.fields,field_description:rest_signport.field_rest_api__idp_entity_id
-msgid "Lägitimerings tjänst url"
-msgstr ""
 
 #. module: rest_signport
 #: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
@@ -145,12 +148,7 @@ msgstr ""
 #. module: rest_signport
 #: model:ir.model.fields,field_description:rest_signport.field_rest_api__signature_algorithm
 msgid "Signature algorithm"
-msgstr ""
-
-#. module: rest_signport
-#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
-msgid "Signera"
-msgstr ""
+msgstr "Signeringsalgoritm"
 
 #. module: rest_signport
 #: code:addons/rest_signport/models/rest_api.py:0

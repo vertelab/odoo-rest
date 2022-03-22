@@ -21,7 +21,7 @@
                   </p>
                   Personnummer:
                   <input id="personnumber" name="Personnummer"/>
-                  <button type="button" id="start_signing_bankid" custom="click_cost">Signera</button>
+                  <button type="button" id="start_signing_bankid" class="btn btn-primary" custom="click_cost">Accept and sign</button>
                   <div id="bankid_form">
                   </div>
               </main>

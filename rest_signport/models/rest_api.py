@@ -17,13 +17,13 @@ class RestApiSignport(models.Model):
         string="Service provider url", help="Link to our website (spEntityId)"
     )
     idp_entity_id = fields.Char(
-        string="Lägitimerings tjänst url", help="Link to signing servide (idpEntityId)"
+        string="Identity service url", help="Link to identity service (idpEntityId)"
     )
     signature_algorithm = fields.Char(
         string="Signature algorithm",
         help="Link to signature algorithm (signatureAlgorithm)",
     )
-    loa = fields.Char(string="Loa", help="Link to loa (loa)")
+    loa = fields.Char(string="Levels of assurance", help="Link to levels of assurance (loa)")
     api_type = fields.Selection(
         selection_add=[("signport", "Knowit signport")],
         ondelete={"signport": "set default"},
