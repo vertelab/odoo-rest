@@ -4,7 +4,7 @@ odoo.define('rest_signport.signport', function (require) {
 
     var publicWidget = require('web.public.widget');
 
-    publicWidget.registry.SaleUpdateLineButton = publicWidget.Widget.extend({
+    publicWidget.registry.SalePortalRestSignport = publicWidget.Widget.extend({
         selector: '.o_portal_sale_sidebar',
         events: {
             'click button#start_signing_bankid': '_onClick',
