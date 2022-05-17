@@ -23,6 +23,7 @@
     "name": "Rest Best",
     "description": """
 Implements REST calls to the Best API.
+See more at https://www.besttransport.se/foretag/leveransomr%C3%A5desapi/
 14.0.0.0.0 - Initial version
     """,
     "category": "REST",
