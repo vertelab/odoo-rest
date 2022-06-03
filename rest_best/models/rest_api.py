@@ -21,25 +21,25 @@ def _extend_header(headers, defaults):
     return headers
 
 class RestApiBest(models.Model):
-    _name = "rest.api.best"
     _inherit = "rest.api"
 
-    secret_token = fields.Char("Secret Token")
+    cn_or_api_key = fields.Char("CN or api key")
+    customer_identifier = fields.Char("Customer Identifier")
 
-    def get_delivery_options(self, zip_code, country="SE", customer_identifier=None):
+    def get_delivery_options(self, zip_code, country="SE"):
         endpoint = f"deliverydates/{country}/{zip_code}"
-        return self.parse_resp("GET", endpoint, customer_identifier=customer_identifier)
+        return self.parse_resp("GET", endpoint)
 
-    def get_all_delivery_options(self, country="SE", customer_identifier=None):
+    def get_all_delivery_options(self, country="SE"):
         endpoint = f"deliverydates/{country}"
-        return self.parse_resp("GET", endpoint, customer_identifier=customer_identifier)
+        return self.parse_resp("GET", endpoint)
 
-    def get_all_delivery_zones(self, customer_identifier=None):
-        return self.parse_resp("GET", "", customer_identifier=customer_identifier)
+    def get_all_delivery_zones(self):
+        return self.parse_resp("GET", "")
 
-    def parse_resp(self, method, endpoint_url, headers=None, data_vals=None, customer_identifier=None):
+    def parse_resp(self, method, endpoint_url, headers=None, data_vals=None):
         try:
-            resp = self.call_endpoint(method, endpoint, headers, data_vals, customer_identifier)
+            resp = self.call_endpoint(method, endpoint, headers, data_vals)
         except Exception as e: #TODO: Filter this except.
             _logger.exception(e)
             raise
@@ -54,27 +54,17 @@ class RestApiBest(models.Model):
             raise UserError(_("Invalid response from API.\n{resp_content}").format(resp_content=resp.content))
 
 
-    def call_endpoint(self, method, endpoint_url, headers=None, data_vals=None, customer_identifier=None):
+    def call_endpoint(self, method, endpoint_url, headers=None, data_vals=None):
         default_headers = {
-                "X-API-Token": self.secret_token,
-                "X-Customer-Identifier": customer_identifier or "UPPH1",
+                "X-API-Token": self.cn_or_api_key,
+                "X-Customer-Identifier": self.customer_identifier or "UPPH1",
                 }
-        default_headers.update(headers) # Use this one!
+        if headers:
+            default_headers.update(headers)
 
         return super().call_endpoint(method, endpoint_url, default_headers, data_vals)
 
     def test_connection(self):
-        if self == self.env.ref("rest_signport.api_signport"):
-            res = self.call_endpoint(
-                method="GET",
-                endpoint_url="/__Health",
-                headers={"accept": "application/json"},
-            )
-            if res.get("status") == "up":
-                raise UserError(_("Connection is working"))
-            else:
-                raise UserError(_("The connection is not working"))
-        else:
-            return super(RestApiSignport, self).test_connection()
-
+        # Currently the test does not end successfully, this code is here to indicate this for the installer
+        raise UserError(self.call_endpoint("GET", ""))
 

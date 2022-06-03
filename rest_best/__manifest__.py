@@ -34,6 +34,7 @@ See more at https://www.besttransport.se/foretag/leveransomr%C3%A5desapi/
     ],
     "data": [
         "data/rest_api_data.xml",
+        "views/rest_api_view.xml",
     ],
     "demo": [],
     "installable": True,
