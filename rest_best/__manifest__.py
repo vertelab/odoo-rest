@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Rest: Base API',
+    'name': 'Rest: Best API',
     'version': '14.0.0.0.0',
     # Version ledger: 14.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
     'summary': 'Implements REST calls to the Best API.',
@@ -48,7 +48,7 @@ See more at https://www.besttransport.se/foretag/leveransomr%C3%A5desapi/
     ],
     "data": [
         "data/rest_api_data.xml",
-        "views/rest_api_view.xml",
+        #"views/rest_api_view.xml",
     ],
     "demo": [],
     "installable": True,
