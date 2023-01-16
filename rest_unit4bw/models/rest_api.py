@@ -22,6 +22,11 @@ class RestApiAgresso(models.Model):
             return super(RestApiAgresso, self).test_connection()
 
     def agr_post_project(self, data_vals):
-        return self.call_endpoint(
+        _logger.error("*"*999)
+        _logger.error(f"{data_vals=}")
+
+        res = self.call_endpoint(
             method="POST", endpoint_url="/v1/projects", data_vals=data_vals
         )
+        _logger.error(f"{res=}")
+        return res
