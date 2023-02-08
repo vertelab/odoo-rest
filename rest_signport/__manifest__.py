@@ -42,12 +42,7 @@ Implements REST calls to the SignPort API.
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-rest',
     # Any module necessary for this one to work correctly
-    "depends": [
-        "rest_base",
-        "sale",
-        "portal",
-        "base_automation",
-    ],
+    'depends': ['rest_base','sale','portal','base_automation',],
     "data": [
         "data/rest_api_data.xml",
         'views/sale_order_portal_templates.xml',
