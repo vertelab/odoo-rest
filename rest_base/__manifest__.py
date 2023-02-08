@@ -47,9 +47,7 @@
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-rest',
     # Any module necessary for this one to work correctly
-    "depends": [
-        "base",
-    ],
+    'depends': ['base',],
     "data": [
         "views/rest_base_view.xml",
         "views/rest_log_view.xml",
