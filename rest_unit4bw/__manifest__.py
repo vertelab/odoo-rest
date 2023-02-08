@@ -42,10 +42,7 @@ Implements REST calls to the Unit4 Business World (Agresso Cloud ERP Solution) A
     'repository': 'https://github.com/vertelab/odoo-rest',
     # Any module necessary for this one to work correctly
 
-
-    "depends": [
-        "rest_base",
-    ],
+    'depends': ['rest_base',],
     "data": [
         "data/rest_api_data.xml",
         # "data/ir_actions_server.xml",
