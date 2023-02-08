@@ -42,10 +42,7 @@ See more at https://www.besttransport.se/foretag/leveransomr%C3%A5desapi/
     'maintainer': 'Vertel AB',
     'repository': 'https://github.com/vertelab/odoo-rest',
     # Any module necessary for this one to work correctly
-   "depends": [
-        "rest_base",
-        "base",
-    ],
+   'depends': ['rest_base','base',],
     "data": [
         "data/rest_api_data.xml",
         #"views/rest_api_view.xml",
