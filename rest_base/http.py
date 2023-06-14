@@ -12,7 +12,7 @@ import werkzeug.routing
 import werkzeug.wrappers
 
 from odoo import http
-from odoo.http import HttpRequest, request, Response
+from odoo.http import request, Response, Request
 
 _logger = logging.getLogger(__name__)
 
@@ -186,7 +186,7 @@ class JSONEncoder(json.JSONEncoder):
         return super(JSONEncoder, self).default(obj)
 
 
-class HttpRestRequest(HttpRequest):
+class HttpRestRequest(Request):
     def make_json_response(self, data, headers=None, cookies=None):
         data = JSONEncoder().encode(data)
         if headers is None:
