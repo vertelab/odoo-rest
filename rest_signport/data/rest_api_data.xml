@@ -20,7 +20,7 @@ for rec in records:
             </field>
         </record>
 
-        <record id="sale_invoice_update_trigger" model="base.automation">
+        <!-- <record id="sale_invoice_update_trigger" model="base.automation">
             <field name="name">Sales Order Invoice Trigger</field>
             <field name="active">True</field>
             <field name="trigger">on_write</field>
@@ -34,6 +34,6 @@ for rec in records:
     rec._create_invoices()
     rec.update({'state': 'done'})
             </field>
-        </record>
+        </record> -->
     </data>
 </odoo>

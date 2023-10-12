@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0-20210312\n"
+"Project-Id-Version: Odoo Server 14.0-20220428\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-22 08:47+0000\n"
-"PO-Revision-Date: 2022-03-22 08:47+0000\n"
+"POT-Creation-Date: 2023-05-23 09:00+0000\n"
+"PO-Revision-Date: 2023-05-23 09:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,12 +25,18 @@ msgstr "<span>Accepterad på uppdrag av:</span>"
 msgid "<span>By signing this proposal, I agree to the following terms:</span>"
 msgstr ""
 "<span>Genom att signera det här avtalet, går jag med på följande "
-"vilkor:</span>"
+"villkor:</span>"
 
 #. module: rest_signport
 #: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
 msgid "<span>For an amount of:</span>"
 msgstr "<span>För ett pris av:</span>"
+
+#. module: rest_signport
+#: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
+msgid ""
+"<span>The name of the current account is the same as the signatory.</span>"
+msgstr "Namnet på nuvarande kontot är detsamma som signatören."
 
 #. module: rest_signport
 #: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
@@ -45,12 +51,12 @@ msgstr "Acceptera och signera"
 #. module: rest_signport
 #: model:ir.model.fields,field_description:rest_signport.field_rest_api__api_type
 msgid "Api type"
-msgstr "Api typ"
+msgstr ""
 
 #. module: rest_signport
 #: model:ir.model,name:rest_signport.model_rest_api
 msgid "Centralized model to make REST calls from Odoo."
-msgstr "Centraliserad model för att göra REST anrop från Odoo."
+msgstr ""
 
 #. module: rest_signport
 #: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport
@@ -61,7 +67,7 @@ msgstr "Stäng"
 #: code:addons/rest_signport/models/rest_api.py:0
 #, python-format
 msgid "Connection is working"
-msgstr "Integrationen fungerar"
+msgstr ""
 
 #. module: rest_signport
 #: model:ir.model.fields,field_description:rest_signport.field_rest_api__customer_string
@@ -71,7 +77,7 @@ msgstr "Kunds signaturetikett"
 #. module: rest_signport
 #: model:ir.model.fields,field_description:rest_signport.field_rest_api__display_name
 msgid "Display Name"
-msgstr "Visningsnamn"
+msgstr ""
 
 #. module: rest_signport
 #: model:ir.model.fields,field_description:rest_signport.field_rest_api__employee_string
@@ -96,7 +102,7 @@ msgstr ""
 #. module: rest_signport
 #: model:ir.model.fields,field_description:rest_signport.field_rest_api____last_update
 msgid "Last Modified on"
-msgstr "Senast redigerad"
+msgstr ""
 
 #. module: rest_signport
 #: model:ir.model.fields,field_description:rest_signport.field_rest_api__loa
@@ -132,12 +138,11 @@ msgstr ""
 #: code:addons/rest_signport/controllers/main.py:0
 #, python-format
 msgid "Quotation viewed by customer %s"
-msgstr "Offert visad av kund %s"
+msgstr ""
 
 #. module: rest_signport
-#: model:base.automation,name:rest_signport.sale_invoice_update_trigger
 #: model:ir.actions.server,name:rest_signport.sale_order_invoice_action
-msgid "Sales Order Invoice Trigger"
+msgid "Sale Order Invoice Action"
 msgstr ""
 
 #. module: rest_signport
@@ -154,7 +159,7 @@ msgstr "Signeringsalgoritm"
 #: code:addons/rest_signport/models/rest_api.py:0
 #, python-format
 msgid "The connection is not working"
-msgstr "Integrationen fungerar inte"
+msgstr ""
 
 #. module: rest_signport
 #: model_terms:ir.ui.view,arch_db:rest_signport.sale_order_portal_template_signport

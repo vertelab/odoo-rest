@@ -1,7 +1,7 @@
 from odoo import fields, http, _
 from odoo.http import request
 import json
-import logging
+
 import base64
 from odoo.exceptions import AccessError, MissingError
 import binascii
@@ -15,7 +15,7 @@ from odoo.addons.portal.controllers.portal import (
     get_records_pager,
 )
 
-
+import logging
 _logger = logging.getLogger(__name__)
 
 

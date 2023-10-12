@@ -91,7 +91,7 @@ class RestApi(models.Model):
         try:
             _logger.warning(f"url: {url}, data: {data_vals}, headers: {headers}, method: {method},")
             res_json = request.urlopen(req, context=ctx).read()
-            _logger.warning(f" res_json: {res_json}")
+            _logger.warning(f"rest api res_json: {res_json}")
         except HTTPError as e:
             e_read = e.read()
             formatted_error = (
