@@ -44,26 +44,24 @@ odoo.define('rest_signport.signport', function (require) {
          */
         _onClick(ev) {
             ev.preventDefault();
-            console.log("ERIDAN TEST");
             var self = this;
 
             var ssn = $('#personnumber').val();
-            console.log(ssn);
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
 
             this._callBankidSigninRoute(self.orderDetail.orderId, {
-                'ssn': ssn,
+                'ssn': ssn.replace(/-/g, ''),
                 'sale_order': self.orderDetail.orderId,
                 'access_token': urlParams.get('access_token')
             }).then((data) => {
-              data = JSON.parse(data)
-              $('#relayState').val(data['relayState']);
-              $('#eidSignRequest').val(data['eidSignRequest']);
-              $('#binding').val(data['binding']);
-              $('#autosubmit').attr('action', data['signingServiceUrl']);
-              $('#autosubmit').submit();
-              // this.renderElement();
+                data = JSON.parse(data)
+                $('#relayState').val(data['relayState']);
+                $('#eidSignRequest').val(data['eidSignRequest']);
+                $('#binding').val(data['binding']);
+                $('#autosubmit').attr('action', data['signingServiceUrl']);
+                $('#autosubmit').submit();
+                // this.renderElement();
             });
 
         }
