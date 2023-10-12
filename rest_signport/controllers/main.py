@@ -21,7 +21,7 @@ _logger = logging.getLogger(__name__)
 
 class KnowitController(http.Controller):
     def _order_get_page_view_values(self, order, access_token, **kwargs):
-        _logger.warning("1"*999)
+        _logger.warning("1"*50) #HERE
         values = {
             "sale_order": order,
             "token": access_token,
@@ -82,16 +82,16 @@ class KnowitController(http.Controller):
         website=True,
     )
     def complete_signing(self, order_id, access_token, **res):
-        _logger.warning("2"*999)
+        _logger.warning("2"*50) #HERE
         html_form = base64.b64decode(res.get("EidSignResponse")).decode()
         data = {
             "relayState": res["RelayState"],
             "eidSignResponse": res["EidSignResponse"],
             "binding": res["Binding"],
         }
-        _logger.warning("complete_signing controller"*99)
+        _logger.warning("complete_signing controller"*10)
         api_signport = self.get_signport_api()
-        res = api_signport.sudo().signport_post(data, order_id, "/CompleteSigning")
+        res = api_signport.sudo().signport_post(data, order_id, "/CompleteSigning") 
         res_json = json.dumps(res)
         try:
             order_sudo = request.env["sale.order"].sudo().browse(order_id)
@@ -131,7 +131,7 @@ class KnowitController(http.Controller):
         methods=["POST"],
     )
     def start_sign(self, order_id):
-        _logger.warning("3"*999)
+        _logger.warning("3"*50) #HERE
         data = json.loads(request.httprequest.data)
         ssn = data.get("params", {}).get("ssn")
         if not ssn:

@@ -89,9 +89,9 @@ class RestApi(models.Model):
         url = self.url + endpoint_url
         req = request.Request(url=url, data=data_vals, headers=headers, method=method)
         try:
-            _logger.warning(f"url: {url}, data: {data_vals}, headers: {headers}, method: {method},")
+            #_logger.warning(f"url: {url}, data: {data_vals}, headers: {headers}, method: {method},") HERE
             res_json = request.urlopen(req, context=ctx).read()
-            _logger.warning(f"rest api res_json: {res_json}")
+            #_logger.warning(f"rest api res_json: {res_json}") HERE
         except HTTPError as e:
             e_read = e.read()
             formatted_error = (
