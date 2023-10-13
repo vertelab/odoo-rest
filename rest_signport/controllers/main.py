@@ -114,7 +114,7 @@ class KnowitController(http.Controller):
     @http.route(
         ["/my/orders/<int:order_id>/sign_complete"],
         type="http",
-        auth="public",
+        auth="user",
         methods=["POST"],
         csrf=False,
         website=True,
@@ -169,16 +169,25 @@ class KnowitController(http.Controller):
         methods=["POST"],
     )
     def start_sign(self, order_id):
-        data = json.loads(request.httprequest.data)
-        ssn = data.get("params", {}).get("ssn")
-        if not ssn:
-            return False
-        api_signport = self.get_signport_api()
-        res = api_signport.sudo().post_sign_sale_order(
-            ssn=ssn,
-            order_id=order_id,
-            access_token=data.get("params", {}).get("access_token"),
-            message="Signering av dokument",
-        )
-        res_json = json.dumps(res)
+        uid = http.request.env.context.get('uid')
+        logging.info(f"start_sign === {type(uid)} === {uid}")
+
+        if uid == 4:
+            res_json = {
+                'message': 'There is a problem try to sign this document. Reload Page to Confirm you are logged In',
+                'status': 403
+            }
+        else:
+            data = json.loads(request.httprequest.data)
+            ssn = data.get("params", {}).get("ssn")
+            if not ssn:
+                return False
+            api_signport = self.get_signport_api()
+            res = api_signport.sudo().post_sign_sale_order(
+                ssn=ssn,
+                order_id=order_id,
+                access_token=data.get("params", {}).get("access_token"),
+                message="Signering av dokument",
+            )
+            res_json = json.dumps(res)
         return res_json

@@ -56,14 +56,17 @@ odoo.define('rest_signport.signport', function (require) {
                 'access_token': urlParams.get('access_token')
             }).then((data) => {
                 data = JSON.parse(data)
-                $('#relayState').val(data['relayState']);
-                $('#eidSignRequest').val(data['eidSignRequest']);
-                $('#binding').val(data['binding']);
-                $('#autosubmit').attr('action', data['signingServiceUrl']);
-                $('#autosubmit').submit();
-                // this.renderElement();
+                if (data['status'] === 403) {
+                    alert(data['message'])
+                } else {
+                    $('#relayState').val(data['relayState']);
+                    $('#eidSignRequest').val(data['eidSignRequest']);
+                    $('#binding').val(data['binding']);
+                    $('#autosubmit').attr('action', data['signingServiceUrl']);
+                    $('#autosubmit').submit();
+                    // this.renderElement();
+                }
             });
-
         }
     });
-    });
+});
