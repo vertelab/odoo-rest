@@ -20,7 +20,7 @@ _logger = logging.getLogger(__name__)
 
 
 class CustomerPortal(CustomerPortal):
-    @http.route(['/my/orders/<int:order_id>'], type='http', auth="user", website=True)
+    @http.route(['/my/orders/<int:order_id>'], type='http', auth="public", website=True)
     def portal_order_page(self, order_id, report_type=None, access_token=None, message=False, download=False, **kw):
         try:
             order_sudo = self._document_check_access('sale.order', order_id, access_token=access_token)
@@ -164,17 +164,17 @@ class KnowitController(http.Controller):
     @http.route(
         ["/my/orders/<int:order_id>/sign_start"],
         type="json",
-        auth="user",
+        auth="public",
         website=True,
         methods=["POST"],
     )
     def start_sign(self, order_id):
-        uid = http.request.env.context.get('uid')
+        uid = request.uid
         logging.info(f"start_sign === {type(uid)} === {uid}")
 
         if int(uid) == 4:
             res_json = {
-                'message': 'There is a problem try to sign this document. Reload Page to Confirm you are logged In',
+                'message': 'There is a problem trying to sign this document. Reload Page to Confirm you are logged In',
                 'status': 403
             }
         else:

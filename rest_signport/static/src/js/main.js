@@ -55,10 +55,10 @@ odoo.define('rest_signport.signport', function (require) {
                 'sale_order': self.orderDetail.orderId,
                 'access_token': urlParams.get('access_token')
             }).then((data) => {
-                data = JSON.parse(data)
                 if (data['status'] === 403) {
                     alert(data['message'])
                 } else {
+                    data = JSON.parse(data)
                     $('#relayState').val(data['relayState']);
                     $('#eidSignRequest').val(data['eidSignRequest']);
                     $('#binding').val(data['binding']);
