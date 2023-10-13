@@ -164,12 +164,11 @@ class KnowitController(http.Controller):
     @http.route(
         ["/my/orders/<int:order_id>/sign_start"],
         type="json",
-        auth="public",
+        auth="user",
         website=True,
         methods=["POST"],
     )
     def start_sign(self, order_id):
-        _logger.warning("3"*999)
         data = json.loads(request.httprequest.data)
         ssn = data.get("params", {}).get("ssn")
         if not ssn:
