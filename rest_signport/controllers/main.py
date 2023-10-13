@@ -20,7 +20,7 @@ _logger = logging.getLogger(__name__)
 
 
 class CustomerPortal(CustomerPortal):
-    @http.route(['/my/orders/<int:order_id>'], type='http', auth="public", website=True)
+    @http.route(['/my/orders/<int:order_id>'], type='http', auth="user", website=True)
     def portal_order_page(self, order_id, report_type=None, access_token=None, message=False, download=False, **kw):
         try:
             order_sudo = self._document_check_access('sale.order', order_id, access_token=access_token)
@@ -59,7 +59,6 @@ class CustomerPortal(CustomerPortal):
 
 class KnowitController(http.Controller):
     def _order_get_page_view_values(self, order, access_token, **kwargs):
-        _logger.warning("1"*50) #HERE
         values = {
             "sale_order": order,
             "token": access_token,
@@ -164,7 +163,7 @@ class KnowitController(http.Controller):
     @http.route(
         ["/my/orders/<int:order_id>/sign_start"],
         type="json",
-        auth="public",
+        auth="user",
         website=True,
         methods=["POST"],
     )
