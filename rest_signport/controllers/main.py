@@ -172,7 +172,7 @@ class KnowitController(http.Controller):
         uid = http.request.env.context.get('uid')
         logging.info(f"start_sign === {type(uid)} === {uid}")
 
-        if uid == 4:
+        if int(uid) == 4:
             res_json = {
                 'message': 'There is a problem try to sign this document. Reload Page to Confirm you are logged In',
                 'status': 403
