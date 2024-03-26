@@ -83,7 +83,6 @@ class RestApi(models.Model):
             headers["Content-Type"] = "application/json"
         ctx = self._generate_ctx()
         url = self.url + endpoint_url
-        _logger.info(f"I am calling this endpoint ========: {url}")
         req = request.Request(url=url, data=data_vals, headers=headers, method=method)
         try:
             res_json = request.urlopen(req, context=ctx).read()
