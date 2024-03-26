@@ -68,10 +68,6 @@ class RestApi(models.Model):
         return ctx
 
     def call_endpoint(self, method, endpoint_url, headers=None, data_vals=None):
-        #_logger.warning(f"{method=}")
-        #_logger.warning(f"{endpoint_url=}")
-        #_logger.warning(f"{headers=}")
-        #_logger.warning(f"{data_valse=}")
         """Handles calls to endpoints."""
         self.ensure_one()
 
@@ -90,9 +86,7 @@ class RestApi(models.Model):
         _logger.info(f"I am calling this endpoint ========: {url}")
         req = request.Request(url=url, data=data_vals, headers=headers, method=method)
         try:
-            #_logger.warning(f"url: {url}, data: {data_vals}, headers: {headers}, method: {method},") HERE
             res_json = request.urlopen(req, context=ctx).read()
-            #_logger.warning(f"rest api res_json: {res_json}") HERE
         except HTTPError as e:
             e_read = e.read()
             formatted_error = (
