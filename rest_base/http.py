@@ -163,6 +163,7 @@ def route(route=None, **kw):
                     "message": response,
                     "headers": request.httprequest.headers,
                 }
+                ##TODO VERTEL re add the logs
                 request.env["rest.api"].sudo().create_log(**log_vals)
 
         response_wrap.routing = routing
