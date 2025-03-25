@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="view_rest_api_tree" model="ir.ui.view">
+    <record id="view_rest_api_list" model="ir.ui.view">
         <field name="name">rest.api.tree</field>
         <field name="model">rest.api</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
-            <tree string="APIs">
+            <list string="APIs">
                 <field name="name"/>
                 <field name="url"/>
                 <field name="log_count"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -43,11 +43,11 @@
                         </group>
                         <group>
                             <field name="api_type"/>
-                            <field name="user" attrs="{'required': [('use_basic_auth', '=', True)]}"/>
-                            <field name="password" password="True" attrs="{'required': [('use_basic_auth', '=', True)]}"/>
+                            <field name="user" required="use_basic_auth == True"/>
+                            <field name="password" password="True" required="use_basic_auth == True"/>
                             <field name="ssl_protocol"/>
-                            <field name="ssl_certfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
-                            <field name="ssl_keyfile" attrs="{'invisible': [('ssl_protocol', '!=', 'mutual')]}"/>
+                            <field name="ssl_certfile" invisible="ssl_protocol != 'mutual'"/>
+                            <field name="ssl_keyfile" invisible="ssl_protocol != 'mutual'"/>
                         </group>
                     </group>
                     <group>
@@ -61,22 +61,8 @@
     <record id="action_rest_api" model="ir.actions.act_window">
         <field name="name">APIs</field>
         <field name="res_model">rest.api</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_rest_api_tree"/>
-    </record>
-
-    <record id="action_view_rest_api_tree" model="ir.actions.act_window.view">
-        <field name="act_window_id" ref="action_rest_api"/>
-        <field name="sequence" eval="2"/>
-        <field name="view_mode">tree</field>
-        <field name="view_id" ref="view_rest_api_tree"/>
-    </record>
-
-    <record id="action_view_rest_api_form" model="ir.actions.act_window.view">
-        <field name="act_window_id" ref="action_rest_api"/>
-        <field name="sequence" eval="2"/>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="view_rest_api_form"/>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_rest_api_list"/>
     </record>
 
     <menuitem action="action_rest_api" name="APIs" id="menu_rest_api" parent="menu_rest" sequence="10" groups="base.group_system"/>
