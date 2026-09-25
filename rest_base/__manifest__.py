@@ -21,23 +21,31 @@
 
 {
     'name': 'Rest: Base',
-    'version': '1.4.0',
+    'version': '18.0.1.4.0',
     # Version ledger: XX.0 = Odoo version. 1 = Major. Non regressionable code. 2 = Minor. New features that are regressionable. 3 = Bug fixes
     'summary': 'Implements a standardized way to call REST APIs from Odoo and logs errors.',
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'REST',
-    'description': """
+    'description': '''
+Base
+====
+
     Implements a standardized way to call REST APIs from Odoo and logs errors.
-    14.0.1.4.0 - Added support for logging incoming calls to odoo endpoints
-    14.0.1.3.2 - Fixed potential bug with arguments to call_endpoint
-    14.0.1.3.1 - Moved menu to main menu
-    14.0.1.3.0 - Added better error handling
-    14.0.1.2.0 - Added a button for testing the connection to the API
-    14.0.1.1.0 - Added better errorhandling and support for HTTP Basic Authentication
-    14.0.1.0.0 - Initial version
-    """,
+        14.0.1.4.0 - Added support for logging incoming calls to odoo endpoints
+        14.0.1.3.2 - Fixed potential bug with arguments to call_endpoint
+        14.0.1.3.1 - Moved menu to main menu
+        14.0.1.3.0 - Added better error handling
+        14.0.1.2.0 - Added a button for testing the connection to the API
+        14.0.1.1.0 - Added better errorhandling and support for HTTP Basic Authentication
+        14.0.1.0.0 - Initial version
+
+    Features:
+
+        - UI Integration: Extends 3 view(s) in the Odoo interface.
+        - Extends Odoo: Builds on rest.api, rest.log.
+    ''',
     #'sequence': '1',
     'author': 'Vertel AB',
     'website': 'https://vertel.se/apps/odoo-rest/rest_base',

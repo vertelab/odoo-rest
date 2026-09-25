@@ -28,10 +28,17 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'REST',
-    'description': """
-Implements REST calls to the Unit4 Business World (Agresso Cloud ERP Solution) API.
-18.0.1.0.0 - Initial version
-    """,
+    'description': '''
+ Unit4bw, Unit4 Business World (Agresso)
+========================================
+
+    Implements REST calls to the Unit4 Business World (Agresso Cloud ERP Solution) API.
+    18.0.1.0.0 - Initial version
+
+    Features:
+
+        - Extends Odoo: Builds on rest.api.
+    ''',
     #'sequence': '1',
     'author': 'Vertel AB',
     'website': 'https://vertel.se/apps/odoo-rest/rest_unit4bw',
